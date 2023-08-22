@@ -1,0 +1,51 @@
+{
+  "applications": ["PalIT"],
+  "changelogDate": "20230822191241",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "paint",
+  "fields": [
+    {
+      "fieldName": "brand",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "paintName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Paint",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "applicationUserName",
+      "otherEntityName": "applicationUser",
+      "otherEntityRelationshipName": "ownedPaint",
+      "ownerSide": false,
+      "relationshipName": "user",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "formulaName",
+      "otherEntityName": "formula",
+      "otherEntityRelationshipName": "paintFormula",
+      "ownerSide": false,
+      "relationshipName": "formulas",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "miniatureName",
+      "otherEntityName": "miniature",
+      "otherEntityRelationshipName": "miniatureFormula",
+      "ownerSide": false,
+      "relationshipName": "minauture",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

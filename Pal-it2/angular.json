@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "palit-2": {
+    "pal-it": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -76,15 +76,15 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "palit-2:build:development",
+            "browserTarget": "pal-it:build:development",
             "port": 4200
           },
           "configurations": {
             "production": {
-              "browserTarget": "palit-2:build:production"
+              "browserTarget": "pal-it:build:production"
             },
             "development": {
-              "browserTarget": "palit-2:build:development"
+              "browserTarget": "pal-it:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,0 +1,42 @@
+{
+  "applications": ["PalIT"],
+  "changelogDate": "20230822191244",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "miniature",
+  "fields": [
+    {
+      "fieldName": "miniatureName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "picture",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Miniature",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "paintName",
+      "otherEntityName": "paint",
+      "otherEntityRelationshipName": "minauture",
+      "ownerSide": true,
+      "relationshipName": "miniatureFormula",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "applicationUserName",
+      "otherEntityName": "applicationUser",
+      "otherEntityRelationshipName": "miniatureName",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

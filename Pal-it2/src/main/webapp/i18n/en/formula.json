@@ -1,0 +1,26 @@
+{
+  "palItApp": {
+    "formula": {
+      "home": {
+        "title": "Formulas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formula",
+        "createOrEditLabel": "Create or edit a Formula",
+        "notFound": "No Formulas found"
+      },
+      "created": "A new Formula is created with identifier {{ param }}",
+      "updated": "A Formula is updated with identifier {{ param }}",
+      "deleted": "A Formula is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formula {{ id }}?"
+      },
+      "detail": {
+        "title": "Formula"
+      },
+      "id": "ID",
+      "formulaName": "Formula Name",
+      "paintFormula": "Paint Formula",
+      "user": "User"
+    }
+  }
+}

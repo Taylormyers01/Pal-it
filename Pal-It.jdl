@@ -11,27 +11,28 @@ application {
   entities *
 }
 entity Paint {
-  brand String
-  paintName String
+  brand String required
+  paintName String required
 }
 entity Formula {
-  formulaName String
+  formulaName String required
 }
 entity ApplicationUser {
+  applicationUserName String required
 }
 entity Miniature {
-  miniatureName String
+  miniatureName String required
 	picture ImageBlob
 }
 relationship OneToMany{
-  ApplicationUser{formulaName} to Formula
-  ApplicationUser{miniatureName} to Miniature
+  ApplicationUser{formulaName(formulaName)} to Formula{user(applicationUserName)}
+  ApplicationUser{miniatureName(miniatureName)} to Miniature{user(applicationUserName)}
 }
 relationship ManyToMany{
-	ApplicationUser{ownedPaint} to Paint{user}
-  Formula{paintFormula} to Paint{formulas}
-  Miniature{miniatureFormula} to Paint{minauture}
+  ApplicationUser{ownedPaint(paintName)} to Paint{user(applicationUserName)}
+  Formula{paintFormula(paintName)} to Paint{formulas(formulaName)}
+  Miniature{miniatureFormula(paintName)} to Paint{minauture(miniatureName)}
 }
 relationship OneToOne {
-  ApplicationUser{internalUser} to User
+  ApplicationUser{internalUser(login)} to User
 }

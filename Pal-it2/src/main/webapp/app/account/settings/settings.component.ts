@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import { LANGUAGES } from 'app/config/language.constants';
 
 const initialAccount: Account = {} as Account;
 
@@ -12,6 +14,7 @@ const initialAccount: Account = {} as Account;
 })
 export class SettingsComponent implements OnInit {
   success = false;
+  languages = LANGUAGES;
 
   settingsForm = new FormGroup({
     firstName: new FormControl(initialAccount.firstName, {
@@ -34,7 +37,7 @@ export class SettingsComponent implements OnInit {
     login: new FormControl(initialAccount.login, { nonNullable: true }),
   });
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => {
@@ -52,6 +55,10 @@ export class SettingsComponent implements OnInit {
       this.success = true;
 
       this.accountService.authenticate(account);
+
+      if (account.langKey !== this.translateService.currentLang) {
+        this.translateService.use(account.langKey);
+      }
     });
   }
 }

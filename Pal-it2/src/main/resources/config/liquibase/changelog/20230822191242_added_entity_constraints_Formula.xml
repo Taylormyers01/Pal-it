@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Formula.
+    -->
+    <changeSet id="20230822191242-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="formula_id"
+                                 baseTableName="rel_formula__paint_formula"
+                                 constraintName="fk_rel_formula__paint_formula__formula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="formula"/>
+
+        <addForeignKeyConstraint baseColumnNames="paint_formula_id"
+                                 baseTableName="rel_formula__paint_formula"
+                                 constraintName="fk_rel_formula__paint_formula__paint_formula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="paint"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="formula"
+                                 constraintName="fk_formula__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="application_user"/>
+    </changeSet>
+</databaseChangeLog>
