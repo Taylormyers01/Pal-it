@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="formula">
+      <h2 data-cy="formulaDetailsHeading"><span jhiTranslate="palItApp.formula.detail.title">Formula</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ formula.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="palItApp.formula.formulaName">Formula Name</span></dt>
+        <dd>
+          <span>{{ formula.formulaName }}</span>
+        </dd>
+        <dt><span jhiTranslate="palItApp.formula.paintFormula">Paint Formula</span></dt>
+        <dd>
+          <span *ngFor="let paintFormula of formula.paintFormulas; let last = last">
+            <a [routerLink]="['/paint', paintFormula.id, 'view']">{{ paintFormula.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="palItApp.formula.applicationUser">Application User</span></dt>
+        <dd>
+          <div *ngIf="formula.applicationUser">
+            <a [routerLink]="['/application-user', formula.applicationUser.id, 'view']">{{ formula.applicationUser.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/formula', formula.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+{
+  "applications": ["PalIT"],
+  "changelogDate": "20230822183452",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "application_user",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ApplicationUser",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "internalUser",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "formula",
+      "otherEntityRelationshipName": "applicationUser",
+      "relationshipName": "formulaName",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "miniature",
+      "otherEntityRelationshipName": "applicationUser",
+      "relationshipName": "miniatureName",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "paint",
+      "otherEntityRelationshipName": "user",
+      "ownerSide": true,
+      "relationshipName": "ownedPaint",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

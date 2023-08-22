@@ -1,34 +1,37 @@
 
 application {
   config {
-    baseName PalIT,
-    applicationType monolith,
-    packageName com.myapp,
-    authenticationType jwt,
-    prodDatabaseType mysql,
+    baseName PalIT
+    applicationType monolith
+    packageName com.myapp
+    authenticationType jwt
+    prodDatabaseType mysql
     clientFramework angular
   }
   entities *
 }
 entity Paint {
-	brand String,
-    paintName String,
+  brand String
+  paintName String
 }
 entity Formula {
-	formulaName String,
+  formulaName String
+}
+entity ApplicationUser {
 }
 entity Miniature {
-	picture ImageBlob,
+  miniatureName String
+	picture ImageBlob
 }
 relationship OneToMany{
-  User{forumulas} to Formula,
-  User{miniature} to Miniature
+  ApplicationUser{formulaName} to Formula
+  ApplicationUser{miniatureName} to Miniature
 }
 relationship ManyToMany{
-	User{ownedPaint} to Paint
-    Formula{paintFormula} to Paint,
-    Miniature{miniatureFormula} to Paint,
+	ApplicationUser{ownedPaint} to Paint{user}
+  Formula{paintFormula} to Paint{formulas}
+  Miniature{miniatureFormula} to Paint{minauture}
 }
-
-
-    
+relationship OneToOne {
+  ApplicationUser{internalUser} to User
+}

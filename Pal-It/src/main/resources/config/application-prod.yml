@@ -17,7 +17,7 @@ logging:
   level:
     ROOT: INFO
     tech.jhipster: INFO
-    taylor.rocks.palit: INFO
+    com.myapp: INFO
 
 management:
   metrics:

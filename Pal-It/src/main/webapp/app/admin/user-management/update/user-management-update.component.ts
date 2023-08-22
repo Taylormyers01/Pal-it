@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+import { LANGUAGES } from 'app/config/language.constants';
 import { IUser } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
 
 const userTemplate = {} as IUser;
 
 const newUser: IUser = {
+  langKey: 'en',
   activated: true,
 } as IUser;
 
@@ -16,6 +18,7 @@ const newUser: IUser = {
   templateUrl: './user-management-update.component.html',
 })
 export class UserManagementUpdateComponent implements OnInit {
+  languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
 
@@ -37,6 +40,7 @@ export class UserManagementUpdateComponent implements OnInit {
       validators: [Validators.minLength(5), Validators.maxLength(254), Validators.email],
     }),
     activated: new FormControl(userTemplate.activated, { nonNullable: true }),
+    langKey: new FormControl(userTemplate.langKey, { nonNullable: true }),
     authorities: new FormControl(userTemplate.authorities, { nonNullable: true }),
   });
 
