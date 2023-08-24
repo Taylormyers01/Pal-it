@@ -21,3 +21,24 @@ h2,
 strong {
   color: #0fab04;
 }
+
+
+
+.inventory-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 3fr);
+  /*grid-template-columns: auto;*/
+  height: 80%;
+  width: 100%;
+  gap: 10px;
+  /*grid-auto-rows: minmax(100px, auto);*/
+}
+li{
+  background-color: gainsboro;
+  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+  overflow-y:hidden;
+  list-style-type: none;
+}
+

@@ -5,6 +5,7 @@ import com.myapp.repository.ApplicationUserRepository;
 import com.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -183,5 +185,21 @@ public class ApplicationUserResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+    @GetMapping("/application-users/user/{id}")
+    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable Long id,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+        log.debug("REST request to get ApplicationUser by UserID : {}", id);
+        List<ApplicationUser> users = new ArrayList<>();
+        if (eagerload) {
+             users =applicationUserRepository.findAllWithEagerRelationships();
+        } else {
+            users = applicationUserRepository.findAll();
+        }
+        for(ApplicationUser u: users){
+            if(Objects.equals(u.getInternalUser().getId(), id)){
+                return ResponseUtil.wrapOrNotFound(applicationUserRepository.findOneWithEagerRelationships(u.getId()));
+            }
+        }
+        return null;
     }
 }

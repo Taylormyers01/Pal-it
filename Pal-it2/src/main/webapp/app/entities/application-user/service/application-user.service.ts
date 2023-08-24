@@ -76,4 +76,7 @@ export class ApplicationUserService {
     }
     return applicationUserCollection;
   }
+  // findByUserID(id: number): Observable<EntityResponseType> {
+  //   return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
+  // }
 }
