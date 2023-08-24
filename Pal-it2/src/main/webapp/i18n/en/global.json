@@ -13,6 +13,14 @@
         "miniature": "Miniature",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
+      "entitiesuser": {
+        "main": "Inventory",
+        "paint": "Paints",
+        "formula": "Formulas",
+        "applicationUser": "Application User",
+        "miniature": "Miniatures",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+      },
       "account": {
         "main": "Account",
         "settings": "Settings",
