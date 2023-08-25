@@ -6,12 +6,14 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IApplicationUser, NewApplicationUser } from '../application-user.model';
+import {IPaint} from "../../paint/paint.model";
 
 
 export type PartialUpdateApplicationUser = Partial<IApplicationUser> & Pick<IApplicationUser, 'id'>;
 
 export type EntityResponseType = HttpResponse<IApplicationUser>;
 export type EntityArrayResponseType = HttpResponse<IApplicationUser[]>;
+export type EntityArrayResponseTypePaint = HttpResponse<IPaint[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ApplicationUserService {
@@ -79,6 +81,14 @@ export class ApplicationUserService {
   }
   findByUserID(login: string): Observable<IApplicationUser> {
     return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`);
+  }
+  findPaintByUserID(login: string): Observable<IPaint[]>{
+    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`);
+  }
+
+  queryPaint(login: string, req?: any): Observable<EntityArrayResponseTypePaint> {
+    const options = createRequestOption(req);
+    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
   }
 
 }

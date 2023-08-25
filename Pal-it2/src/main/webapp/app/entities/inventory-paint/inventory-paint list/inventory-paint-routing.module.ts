@@ -3,10 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import {InventoryPaintComponent} from "./inventory-paint.component";
+import {ASC} from "../../../config/navigation.constants";
+
+
 const inventoryRoute: Routes = [
   {
     path: '',
     component: InventoryPaintComponent,
+    data: {
+      defaultSort: 'id,' + ASC,
+    },
     canActivate: [UserRouteAccessService],
   },
   // {
