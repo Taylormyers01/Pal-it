@@ -5,6 +5,11 @@ export const EntityNavbarItems = [
     translationKey: 'global.menu.entities.paint',
   },
   {
+    name: 'InventoryPaint',
+    route: 'inventory-paint',
+    translationKey: 'global.menu.entities.paint',
+  },
+  {
     name: 'Formula',
     route: 'formula',
     translationKey: 'global.menu.entities.formula',

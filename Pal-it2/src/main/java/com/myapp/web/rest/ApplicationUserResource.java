@@ -1,14 +1,13 @@
 package com.myapp.web.rest;
 
 import com.myapp.domain.ApplicationUser;
+import com.myapp.domain.Paint;
 import com.myapp.repository.ApplicationUserRepository;
 import com.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.net.http.HttpResponse;
+import java.util.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -186,9 +185,9 @@ public class ApplicationUserResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-    @GetMapping("/application-users/user/{id}")
-    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable Long id,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
-        log.debug("REST request to get ApplicationUser by UserID : {}", id);
+    @GetMapping("/application-users/user/{login}")
+    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+        log.debug("REST request to get ApplicationUser by UserID : {}", login);
         List<ApplicationUser> users = new ArrayList<>();
         if (eagerload) {
              users =applicationUserRepository.findAllWithEagerRelationships();
@@ -196,8 +195,25 @@ public class ApplicationUserResource {
             users = applicationUserRepository.findAll();
         }
         for(ApplicationUser u: users){
-            if(Objects.equals(u.getInternalUser().getId(), id)){
+            if(Objects.equals(u.getInternalUser().getEmail(), login)){
                 return ResponseUtil.wrapOrNotFound(applicationUserRepository.findOneWithEagerRelationships(u.getId()));
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("/application-users/paint/{login}")
+    public ResponseEntity<Set<Paint>> getPaintByUserLogin(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+        log.debug("REST request to get Paint Set by UserID : {}", login);
+        List<ApplicationUser> users = new ArrayList<>();
+        if (eagerload) {
+            users =applicationUserRepository.findAllWithEagerRelationships();
+        } else {
+            users = applicationUserRepository.findAll();
+        }
+        for(ApplicationUser u: users){
+            if(Objects.equals(u.getInternalUser().getEmail(), login)){
+                return new ResponseEntity<>(applicationUserRepository.findOneWithEagerRelationships(u.getId()).get().getOwnedPaints(), HttpStatus.OK);
             }
         }
         return null;

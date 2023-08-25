@@ -10,6 +10,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./paint/paint.module').then(m => m.PaintModule),
       },
       {
+        path: 'inventory-paint',
+        data: { pageTitle: 'palItApp.paint.home.title' },
+        loadChildren: () => import('./inventory-paint/inventory-paint.module').then(m => m.InventoryPaintModule),
+      },
+      {
         path: 'formula',
         data: { pageTitle: 'palItApp.formula.home.title' },
         loadChildren: () => import('./formula/formula.module').then(m => m.FormulaModule),

@@ -7,6 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IApplicationUser, NewApplicationUser } from '../application-user.model';
 
+
 export type PartialUpdateApplicationUser = Partial<IApplicationUser> & Pick<IApplicationUser, 'id'>;
 
 export type EntityResponseType = HttpResponse<IApplicationUser>;
@@ -76,7 +77,8 @@ export class ApplicationUserService {
     }
     return applicationUserCollection;
   }
-  // findByUserID(id: number): Observable<EntityResponseType> {
-  //   return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
-  // }
+  findByUserID(login: string): Observable<IApplicationUser> {
+    return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`);
+  }
+
 }
