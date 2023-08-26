@@ -56,13 +56,13 @@
       <tbody>
       <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
         <td>
-          <a [routerLink]="['/paint', paint.id, 'view']">{{ paint.id }}</a>
+          <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
         </td>
         <td>{{ paint.brand }}</td>
         <td>{{ paint.paintName }}</td>
         <td class="text-end">
           <div class="btn-group">
-            <button type="submit" [routerLink]="['/paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+            <button type="submit" [routerLink]="['/inventory-paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
               <fa-icon icon="eye"></fa-icon>
               <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
             </button>
