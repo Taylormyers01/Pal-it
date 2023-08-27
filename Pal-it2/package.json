@@ -72,11 +72,13 @@
     "packaging": "jar"
   },
   "dependencies": {
+    "@angular/animations": "14.2.0",
     "@angular/common": "14.2.0",
     "@angular/compiler": "14.2.0",
     "@angular/core": "14.2.0",
     "@angular/forms": "14.2.0",
     "@angular/localize": "14.2.0",
+    "@angular/material": "14.2.0",
     "@angular/platform-browser": "14.2.0",
     "@angular/platform-browser-dynamic": "14.2.0",
     "@angular/router": "14.2.0",
@@ -100,7 +102,7 @@
     "@angular-builders/jest": "14.0.1",
     "@angular-devkit/build-angular": "14.2.1",
     "@angular-eslint/eslint-plugin": "14.0.3",
-    "@angular/cli": "14.2.1",
+    "@angular/cli": "^14.2.0",
     "@angular/compiler-cli": "14.2.0",
     "@angular/service-worker": "14.2.0",
     "@types/jest": "28.1.8",
