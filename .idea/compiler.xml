@@ -27,8 +27,5 @@
         <module name="pal-it" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="pal-it" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

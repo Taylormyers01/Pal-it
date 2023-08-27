@@ -12,8 +12,8 @@
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-paint"
-        [routerLink]="['/paint/new']"
-      >
+        [routerLink]="['/inventory-paint', applicationUser?.id ,'edit']">
+
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="palItApp.paint.home.createLabel"> Create a new Paint </span>
       </button>

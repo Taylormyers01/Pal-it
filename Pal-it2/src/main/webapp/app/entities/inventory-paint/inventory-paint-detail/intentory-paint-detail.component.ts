@@ -12,7 +12,12 @@ export class InventoryPaintDetailComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedRoute;
+    this.activatedRoute.data.subscribe(({ paint }) => {
+      this.paint = paint;
+  });
   }
 
+  previousState(): void {
+    window.history.back();
+  }
 }

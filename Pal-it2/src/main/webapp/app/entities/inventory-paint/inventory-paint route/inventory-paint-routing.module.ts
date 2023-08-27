@@ -6,6 +6,8 @@ import {InventoryPaintComponent} from "../inventory-paint list/inventory-paint.c
 import {ASC} from "../../../config/navigation.constants";
 import {InventoryPaintDetailComponent} from "../inventory-paint-detail/intentory-paint-detail.component";
 import {PaintRoutingResolveService} from "../../paint/route/paint-routing-resolve.service";
+import {ApplicationUserRoutingResolveService} from "../../application-user/route/application-user-routing-resolve.service";
+import {InventoryPaintUpdateComponent} from "../inventory-paint-update/inventory-paint-update.component";
 
 
 const inventoryRoute: Routes = [
@@ -33,14 +35,14 @@ const inventoryRoute: Routes = [
   //   },
   //   canActivate: [UserRouteAccessService],
   // },
-  // {
-  //   path: ':id/edit',
-  //   component: PaintUpdateComponent,
-  //   resolve: {
-  //     paint: PaintRoutingResolveService,
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
+  {
+    path: ':id/edit',
+    component: InventoryPaintUpdateComponent,
+    resolve: {
+      applicationUser: ApplicationUserRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 @NgModule({
