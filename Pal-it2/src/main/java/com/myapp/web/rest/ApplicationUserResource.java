@@ -1,18 +1,19 @@
 package com.myapp.web.rest;
 
 import com.myapp.domain.ApplicationUser;
+import com.myapp.domain.Paint;
 import com.myapp.repository.ApplicationUserRepository;
+import com.myapp.service.ApplicationUserService;
 import com.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.net.http.HttpResponse;
+import java.util.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,8 @@ public class ApplicationUserResource {
     private final Logger log = LoggerFactory.getLogger(ApplicationUserResource.class);
 
     private static final String ENTITY_NAME = "applicationUser";
+    @Autowired
+    ApplicationUserService applicationUserService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -186,9 +189,9 @@ public class ApplicationUserResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-    @GetMapping("/application-users/user/{id}")
-    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable Long id,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
-        log.debug("REST request to get ApplicationUser by UserID : {}", id);
+    @GetMapping("/application-users/user/{login}")
+    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+        log.debug("REST request to get ApplicationUser by UserID : {}", login);
         List<ApplicationUser> users = new ArrayList<>();
         if (eagerload) {
              users =applicationUserRepository.findAllWithEagerRelationships();
@@ -196,10 +199,36 @@ public class ApplicationUserResource {
             users = applicationUserRepository.findAll();
         }
         for(ApplicationUser u: users){
-            if(Objects.equals(u.getInternalUser().getId(), id)){
+            if(Objects.equals(u.getInternalUser().getEmail(), login)){
                 return ResponseUtil.wrapOrNotFound(applicationUserRepository.findOneWithEagerRelationships(u.getId()));
             }
         }
         return null;
+    }
+
+    @GetMapping("/application-users/paint/{login}")
+    public ResponseEntity<Set<Paint>> getPaintByUserLogin(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+        log.debug("REST request to get Paint Set by UserID : {}", login);
+        List<ApplicationUser> users = new ArrayList<>();
+        if (eagerload) {
+            users =applicationUserRepository.findAllWithEagerRelationships();
+        } else {
+            users = applicationUserRepository.findAll();
+        }
+        for(ApplicationUser u: users){
+            if(Objects.equals(u.getInternalUser().getEmail(), login)){
+                return new ResponseEntity<>(applicationUserRepository.findOneWithEagerRelationships(u.getId()).get().getOwnedPaints(), HttpStatus.OK);
+            }
+        }
+        return null;
+    }
+    @GetMapping("/application-users/available/{id}")
+    public ResponseEntity<Set<Paint>> getUnownedPaintByUserLogin(@PathVariable Long id){
+        return applicationUserService.getUnownedPaintByUserLogin(id);
+    }
+    @PutMapping("/application-users/available/{id}")
+    public ResponseEntity<Boolean> setOwnedPaintByUserLogin(@PathVariable(value = "id") Long id, @NotNull @RequestBody Paint[] paints){
+        log.debug("REST request to update user Owned Paint id:{} paint: {} ", id, paints);
+        return applicationUserService.setOwnedPaintByUserLogin(id, paints);
     }
 }

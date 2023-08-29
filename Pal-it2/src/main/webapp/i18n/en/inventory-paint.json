@@ -1,0 +1,28 @@
+{
+  "palItApp": {
+    "paint": {
+      "home": {
+        "title": "Paints",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Paint",
+        "createOrEditLabel": "Create or edit a Paint",
+        "notFound": "No Paints found"
+      },
+      "created": "A new Paint is created with identifier {{ param }}",
+      "updated": "A Paint is updated with identifier {{ param }}",
+      "deleted": "A Paint is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Paint {{ id }}?"
+      },
+      "detail": {
+        "title": "Paint"
+      },
+      "id": "ID",
+      "brand": "Brand",
+      "paintName": "Paint Name",
+      "user": "User",
+      "formulas": "Formulas",
+      "minauture": "Minauture"
+    }
+  }
+}

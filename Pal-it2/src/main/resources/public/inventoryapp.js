@@ -1,7 +1,7 @@
 const API_URL = `http://localhost:8080`
 
 function fetchInventoryData() {
-  fetch(`${API_URL}/api/application-users/user/2`)
+  fetch(`${API_URL}/api/application-users/user/user@localhost`)
     .then((res) => {
       //console.log("res is ", Object.prototype.toString.call(res));
       return res.json();

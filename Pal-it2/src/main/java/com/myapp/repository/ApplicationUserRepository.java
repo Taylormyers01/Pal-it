@@ -42,4 +42,5 @@ public interface ApplicationUserRepository extends ApplicationUserRepositoryWith
         "select applicationUser from ApplicationUser applicationUser left join fetch applicationUser.internalUser where applicationUser.id =:id"
     )
     Optional<ApplicationUser> findOneWithToOneRelationships(@Param("id") Long id);
+
 }

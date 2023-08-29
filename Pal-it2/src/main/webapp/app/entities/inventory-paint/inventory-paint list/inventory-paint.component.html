@@ -1,28 +1,28 @@
 <div>
   <h2 id="page-heading" data-cy="PaintHeading">
-    <span jhiTranslate="palItApp.paint.home.title">Paints</span>
+    <span>Inventory Paints</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="palItApp.paint.home.refreshListLabel">Refresh list</span>
-      </button>
+<!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+<!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+<!--        <span Translate="palItApp.paint.home.refreshListLabel">Refresh list</span>-->
+<!--      </button>-->
 
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-paint"
-        [routerLink]="['/paint/new']"
-      >
+        [routerLink]="['/inventory-paint', applicationUser?.id ,'edit']">
+
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="palItApp.paint.home.createLabel"> Create a new Paint </span>
+        <span > Add Paint to Inventory </span>
       </button>
     </div>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
 
-  <jhi-alert></jhi-alert>
+<!--  <jhi-alert></jhi-alert>-->
 
   <div class="alert alert-warning" id="no-result" *ngIf="paints?.length === 0">
     <span jhiTranslate="palItApp.paint.home.notFound">No Paints found</span>
@@ -56,25 +56,15 @@
       <tbody>
       <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
         <td>
-          <a [routerLink]="['/paint', paint.id, 'view']">{{ paint.id }}</a>
+          <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
         </td>
         <td>{{ paint.brand }}</td>
         <td>{{ paint.paintName }}</td>
         <td class="text-end">
           <div class="btn-group">
-            <button type="submit" [routerLink]="['/paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+            <button type="submit" [routerLink]="['/inventory-paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
               <fa-icon icon="eye"></fa-icon>
               <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-            </button>
-
-            <button type="submit" [routerLink]="['/paint', paint.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-              <fa-icon icon="pencil-alt"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-
-            <button type="submit" (click)="delete(paint)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-              <fa-icon icon="times"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
             </button>
           </div>
         </td>
@@ -83,4 +73,3 @@
     </table>
   </div>
 </div>
-
