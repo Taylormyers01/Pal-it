@@ -90,5 +90,7 @@ export class ApplicationUserService {
     const options = createRequestOption(req);
     return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
   }
-
+  queryAvailablePaints(id: number): Observable<EntityArrayResponseTypePaint> {
+    return this.http.get<IPaint[]>(`${this.resourceUrl}/available/${id}`, {observe: 'response' });
+  }
 }

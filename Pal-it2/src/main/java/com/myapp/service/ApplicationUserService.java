@@ -2,16 +2,24 @@ package com.myapp.service;
 
 
 import com.myapp.domain.ApplicationUser;
+import com.myapp.domain.Paint;
 import com.myapp.domain.User;
 import com.myapp.repository.ApplicationUserRepository;
+import com.myapp.repository.PaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 public class ApplicationUserService {
 
     @Autowired
     ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    PaintRepository paintRepository;
 
 
     /**
@@ -29,5 +37,12 @@ public class ApplicationUserService {
         newUser.setInternalUser(user);
         applicationUserRepository.save(newUser);
         return user;
+    }
+
+    public ResponseEntity<Set<Paint>> getUnownedPaintByUserLogin(Long id) {
+        ApplicationUser user = applicationUserRepository.getReferenceById(id);
+        Set<Paint> paints = new HashSet<>(paintRepository.findAll());
+        paints.removeAll(user.getOwnedPaints());
+        return new ResponseEntity<>(paints,HttpStatus.OK);
     }
 }

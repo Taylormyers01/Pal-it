@@ -3,6 +3,7 @@ package com.myapp.web.rest;
 import com.myapp.domain.ApplicationUser;
 import com.myapp.domain.Paint;
 import com.myapp.repository.ApplicationUserRepository;
+import com.myapp.service.ApplicationUserService;
 import com.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,8 @@ public class ApplicationUserResource {
     private final Logger log = LoggerFactory.getLogger(ApplicationUserResource.class);
 
     private static final String ENTITY_NAME = "applicationUser";
+    @Autowired
+    ApplicationUserService applicationUserService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -217,5 +221,9 @@ public class ApplicationUserResource {
             }
         }
         return null;
+    }
+    @GetMapping("/application-users/available/{id}")
+    public ResponseEntity<Set<Paint>> getUnownedPaintByUserLogin(@PathVariable Long id){
+        return applicationUserService.getUnownedPaintByUserLogin(id);
     }
 }
