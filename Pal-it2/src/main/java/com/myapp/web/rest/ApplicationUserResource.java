@@ -226,4 +226,9 @@ public class ApplicationUserResource {
     public ResponseEntity<Set<Paint>> getUnownedPaintByUserLogin(@PathVariable Long id){
         return applicationUserService.getUnownedPaintByUserLogin(id);
     }
+    @PutMapping("/application-users/available/{id}")
+    public ResponseEntity<Boolean> setOwnedPaintByUserLogin(@PathVariable(value = "id") Long id, @NotNull @RequestBody Paint[] paints){
+        log.debug("REST request to update user Owned Paint id:{} paint: {} ", id, paints);
+        return applicationUserService.setOwnedPaintByUserLogin(id, paints);
+    }
 }

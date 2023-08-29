@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PaintService} from "../../paint/service/paint.service";
 import {IApplicationUser} from "../../application-user/application-user.model";
 import {IPaint} from "../../paint/paint.model";
@@ -13,12 +13,14 @@ import {ApplicationUserService} from "../../application-user/service/application
 export class InventoryPaintUpdateComponent implements OnInit {
   applicationUser: IApplicationUser | null = null;
   ownedPaints?: IPaint[] | null = [];
+  newPaints: IPaint[] = [];
   availablePaints?: IPaint[] | null = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected paintService: PaintService,
     protected applicationUserService: ApplicationUserService,
+    public router: Router,
     ) {}
 
   ngOnInit(): void {
@@ -43,8 +45,7 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.ownedPaints?.push(paintToAdd);
     }
     if(this.availablePaints?.includes(paintToAdd)){
-      const numAdd = this.availablePaints.indexOf(paintToAdd);
-      this.availablePaints = this.availablePaints.slice(numAdd, 1);
+      this.availablePaints = this.availablePaints.filter(data => data !== paintToAdd);
     }
   }
   remove(paintToRem: IPaint): void{
@@ -52,8 +53,19 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.availablePaints?.push(paintToRem);
     }
     if(this.ownedPaints?.includes(paintToRem)){
-      const numRem = this.ownedPaints.indexOf(paintToRem);
-      this.ownedPaints = this.ownedPaints.slice(numRem, 1);
+      this.ownedPaints = this.ownedPaints.filter(data => data !== paintToRem);
     }
+  }
+  onSave():void {
+    if (this.applicationUser?.id && this.ownedPaints) {
+      this.applicationUser.ownedPaints = this.ownedPaints;
+      this.applicationUserService.update(this.applicationUser).subscribe(data => this.applicationUser = data.body);
+    }
+    this.router.navigate(['/inventory-paint'], {
+      relativeTo: this.activatedRoute,
+    });
+  }
+  previousState(): void {
+    window.history.back();
   }
 }

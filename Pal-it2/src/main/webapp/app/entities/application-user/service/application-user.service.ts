@@ -86,11 +86,14 @@ export class ApplicationUserService {
     return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`);
   }
 
-  queryPaint(login: string, req?: any): Observable<EntityArrayResponseTypePaint> {
-    const options = createRequestOption(req);
-    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
-  }
+  // queryPaint(login: string, req?: any): Observable<EntityArrayResponseTypePaint> {
+  //   const options = createRequestOption(req);
+  //   return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
+  // }
   queryAvailablePaints(id: number): Observable<EntityArrayResponseTypePaint> {
     return this.http.get<IPaint[]>(`${this.resourceUrl}/available/${id}`, {observe: 'response' });
+  }
+  updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{
+    return this.http.put<boolean>(`${this.resourceUrl}/available/${id}`, paints, {observe: 'response'});
   }
 }

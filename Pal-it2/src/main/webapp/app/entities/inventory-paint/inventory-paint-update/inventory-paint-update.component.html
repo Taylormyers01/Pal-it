@@ -6,6 +6,10 @@
   /*mat-grid-list{*/
   /*  align-items: center;*/
   /*}*/
+  #save-back-buttons{
+    margin-left: 80%;
+  }
+
   mat-card{
     border-style: solid;
     border-width: thin;
@@ -14,7 +18,8 @@
     /*align-items: flex-start !important;*/
     /*height: 170px;*/
     /*width: 250px;*/
-    height: 90%;
+    padding: 10px;
+    height: 70%;
     width: 90%;
   }
   mat-action-list{
@@ -27,12 +32,10 @@
   }
 </style>
 
-
+<h2>Available Paints</h2>
   <div class ="alert alert-warning" id="no-available-paints" *ngIf="availablePaints?.length === 0">
     <span>No available paints to add to inventory</span>
   </div>
-<h2>Available Paints</h2>
-
 <div class="available-paints-cards" *ngIf="availablePaints && availablePaints.length > 0">
   <mat-grid-list cols="6" rowHeight="1.5:1">
     <mat-grid-tile *ngFor="let availPaint of availablePaints">
@@ -53,11 +56,10 @@
 </div>
 
 
-
+<h2>Currently Owned Paints</h2>
 <div class="alert alert-warning" id="no-result" *ngIf="ownedPaints?.length === 0">
   <span>No Paint found for user</span>
 </div>
-<h2>Currently Owned Paints</h2>
 <div class="owned-paints-cards" *ngIf="ownedPaints && ownedPaints.length > 0">
   <mat-grid-list cols="6" rowHeight="1.5:1">
       <mat-grid-tile *ngFor="let paint of ownedPaints">
@@ -75,5 +77,9 @@
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
+</div>
+<div id="save-back-buttons">
+  <button mat-button color="primary" (click)="onSave()" id="save-button">Save</button>
+  <button mat-button color="warn" (click)="previousState()" id="back-button">Back</button>
 </div>
 

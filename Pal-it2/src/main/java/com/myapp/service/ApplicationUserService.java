@@ -45,4 +45,20 @@ public class ApplicationUserService {
         paints.removeAll(user.getOwnedPaints());
         return new ResponseEntity<>(paints,HttpStatus.OK);
     }
+
+    public ResponseEntity<Boolean> setOwnedPaintByUserLogin(Long id, Paint[] paints) {
+        if(applicationUserRepository.findById(id).isPresent()){
+            Set<Paint> paints1 = new HashSet<>();
+            for(Paint p: paints){
+                paints1.add(paintRepository.getReferenceById(p.getId()));
+            }
+            ApplicationUser user = applicationUserRepository.findById(id).get();
+            user.setOwnedPaints(paints1);
+            applicationUserRepository.save(user);
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }else{
+            throw new IllegalArgumentException("Incorrect ID supplied");
+        }
+
+    }
 }
