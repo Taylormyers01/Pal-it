@@ -48,6 +48,7 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.availablePaints = this.availablePaints.filter(data => data !== paintToAdd);
     }
   }
+  //remove - name of method (Paramaters - variable name: Variable type) : return type
   remove(paintToRem: IPaint): void{
     if(!this.availablePaints?.includes(paintToRem)){
       this.availablePaints?.push(paintToRem);
