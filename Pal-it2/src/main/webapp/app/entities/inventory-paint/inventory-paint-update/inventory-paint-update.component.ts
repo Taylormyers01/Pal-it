@@ -4,6 +4,10 @@ import {PaintService} from "../../paint/service/paint.service";
 import {IApplicationUser} from "../../application-user/application-user.model";
 import {IPaint} from "../../paint/paint.model";
 import {ApplicationUserService} from "../../application-user/service/application-user.service";
+import {AccountService} from "../../../core/auth/account.service";
+import {takeUntil} from "rxjs/operators";
+import {Account} from "../../../core/auth/account.model";
+import {Subject} from "rxjs";
 
 
 @Component({
@@ -11,35 +15,38 @@ import {ApplicationUserService} from "../../application-user/service/application
   templateUrl: './inventory-paint-update.component.html',
 })
 export class InventoryPaintUpdateComponent implements OnInit {
-  applicationUser: IApplicationUser | null = null;
+  applicationUser?: IApplicationUser | null = null;
   ownedPaints?: IPaint[] | null = [];
-  newPaints: IPaint[] = [];
+  account: Account | null = null;
   availablePaints?: IPaint[] | null = [];
 
+  private readonly destroy$ = new Subject<void>();
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected paintService: PaintService,
-    protected applicationUserService: ApplicationUserService,
     public router: Router,
+    private accountService: AccountService,
+    protected applicationUserService: ApplicationUserService,
+
+
     ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({applicationUser}) => {
-      this.applicationUser = applicationUser;
-    });
-    // if(this.applicationUser) {
-    //   this.ownedPaints = this.applicationUser.ownedPaints;
-    // }
-    if(this.applicationUser?.applicationUserName) {
-      this.applicationUserService.findPaintByUserID(this.applicationUser.applicationUserName).subscribe(data => this.ownedPaints = data);
+    this.accountService
+        .getAuthenticationState()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(account => (this.account = account));
+    if (this.account?.email) {
+      this.applicationUserService.findByUserID(this.account.email).subscribe((data)=> this.applicationUser = data.body);
+      this.applicationUserService.findPaintByUserID(this.account.email).subscribe(data => this.ownedPaints = data.body);
+
     }
-    this.filterPaints()
-  }
-  filterPaints(): void {
-    if (this.applicationUser) {
+    if(this.applicationUser?.id && this.applicationUser.applicationUserName){
       this.applicationUserService.queryAvailablePaints(this.applicationUser.id).subscribe(data => this.availablePaints = data.body);
     }
+
   }
+
   add(paintToAdd: IPaint):void {
     if(!this.ownedPaints?.includes(paintToAdd)){
       this.ownedPaints?.push(paintToAdd);
@@ -48,7 +55,6 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.availablePaints = this.availablePaints.filter(data => data !== paintToAdd);
     }
   }
-  //remove - name of method (Paramaters - variable name: Variable type) : return type
   remove(paintToRem: IPaint): void{
     if(!this.availablePaints?.includes(paintToRem)){
       this.availablePaints?.push(paintToRem);

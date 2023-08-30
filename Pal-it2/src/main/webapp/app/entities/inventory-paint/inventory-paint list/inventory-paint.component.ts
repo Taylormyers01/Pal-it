@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {IPaint} from "../../paint/paint.model";
-import {EntityArrayResponseType, PaintService} from "../../paint/service/paint.service";
-import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
-import {Subject, map, Observable, tap, combineLatest, switchMap} from "rxjs";
+import {PaintService} from "../../paint/service/paint.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Subject} from "rxjs";
 import {IApplicationUser} from "../../application-user/application-user.model";
 import {takeUntil} from "rxjs/operators";
 import {Account} from "../../../core/auth/account.model";
 import {AccountService} from "../../../core/auth/account.service";
-import {
-  ApplicationUserService,
-  EntityArrayResponseTypePaint
-} from "../../application-user/service/application-user.service";
+import {ApplicationUserService,} from "../../application-user/service/application-user.service";
 import {IUser} from "../../user/user.model";
-import {ASC, DEFAULT_SORT_DATA, DESC, SORT} from "../../../config/navigation.constants";
+import {ASC, DESC, SORT} from "../../../config/navigation.constants";
 import { SortService } from 'app/shared/sort/sort.service';
 
 @Component({
@@ -20,8 +17,8 @@ import { SortService } from 'app/shared/sort/sort.service';
   templateUrl: './inventory-paint.component.html',
 })
 export class InventoryPaintComponent implements OnInit {
-  paints?: IPaint[];
-  applicationUser?: IApplicationUser;
+  paints?: IPaint[] | null = null ;
+  applicationUser?: IApplicationUser | null = null;
   user?: IUser;
   account: Account | null = null;
   predicate = 'id';
@@ -36,7 +33,6 @@ export class InventoryPaintComponent implements OnInit {
       public router: Router,
       private accountService: AccountService,
       protected applicationUserService: ApplicationUserService,
-      protected sortService: SortService
   ) {}
 
   trackId = (_index: number, item: IPaint): number => this.paintService.getPaintIdentifier(item);
@@ -48,8 +44,8 @@ export class InventoryPaintComponent implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe(account => (this.account = account));
     if (this.account?.email) {
-      this.applicationUserService.findByUserID(this.account.email).subscribe(user => this.applicationUser = user);
-      this.applicationUserService.findPaintByUserID(this.account.email).subscribe(data => this.paints = data) //.pipe(map(data => this.paints = data));
+      this.applicationUserService.findByUserID(this.account.email).subscribe(user => this.applicationUser = user.body);
+      this.applicationUserService.findPaintByUserID(this.account.email).subscribe(data => this.paints = data.body) //.pipe(map(data => this.paints = data));
     }
   }
   navigateToWithComponentValues(): void {

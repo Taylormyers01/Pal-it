@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'paint',
-        data: { pageTitle: 'palItApp.paint.home.title' },
+        data: { pageTitle: 'Inventory' },
         loadChildren: () => import('./paint/paint.module').then(m => m.PaintModule),
       },
       {

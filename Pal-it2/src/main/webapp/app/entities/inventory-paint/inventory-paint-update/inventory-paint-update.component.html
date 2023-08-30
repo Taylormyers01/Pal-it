@@ -27,6 +27,9 @@
   }
 </style>
 
+<h1>{{applicationUser?.id}}</h1>
+<!--<h1>{{ownedPaints?.length}}</h1>-->
+
 <h2>Available Paints</h2>
   <div class ="alert alert-warning" id="no-available-paints" *ngIf="availablePaints?.length === 0">
     <span>No available paints to add to inventory</span>

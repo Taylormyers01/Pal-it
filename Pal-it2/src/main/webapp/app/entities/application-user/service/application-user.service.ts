@@ -79,11 +79,11 @@ export class ApplicationUserService {
     }
     return applicationUserCollection;
   }
-  findByUserID(login: string): Observable<IApplicationUser> {
-    return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`);
+  findByUserID(login: string): Observable<HttpResponse<IApplicationUser>> {
+    return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`, {observe: 'response' });
   }
-  findPaintByUserID(login: string): Observable<IPaint[]>{
-    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`);
+  findPaintByUserID(login: string): Observable<HttpResponse<IPaint[]>>{
+    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`,{observe: 'response' });
   }
 
   // queryPaint(login: string, req?: any): Observable<EntityArrayResponseTypePaint> {
