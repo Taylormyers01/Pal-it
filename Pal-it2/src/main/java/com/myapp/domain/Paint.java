@@ -1,13 +1,14 @@
 package com.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Paint.
@@ -32,6 +33,12 @@ public class Paint implements Serializable {
     @NotNull
     @Column(name = "paint_name", nullable = false)
     private String paintName;
+
+    @Lob
+    @Column(name = "picture")
+    private byte[] picture;
+    @Column(name = "picture_content_type")
+    private String pictureContentType;
 
     @ManyToMany(mappedBy = "ownedPaints")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -180,6 +187,21 @@ public class Paint implements Serializable {
         this.minautures.remove(miniature);
         miniature.getMiniatureFormulas().remove(this);
         return this;
+    }
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public String getPictureContentType() {
+        return pictureContentType;
+    }
+
+    public void setPictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

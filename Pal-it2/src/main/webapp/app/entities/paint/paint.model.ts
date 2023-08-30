@@ -6,6 +6,8 @@ export interface IPaint {
   id: number;
   brand?: string | null;
   paintName?: string | null;
+  picture?: string | null;
+  pictureContentType?: string | null;
   users?: Pick<IApplicationUser, 'id' | 'applicationUserName'>[] | null;
   formulas?: Pick<IFormula, 'id' | 'formulaName'>[] | null;
   minautures?: Pick<IMiniature, 'id' | 'miniatureName'>[] | null;
