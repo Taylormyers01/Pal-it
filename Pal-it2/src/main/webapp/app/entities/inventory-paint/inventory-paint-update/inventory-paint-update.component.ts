@@ -7,7 +7,7 @@ import {ApplicationUserService} from "../../application-user/service/application
 import {AccountService} from "../../../core/auth/account.service";
 import {takeUntil} from "rxjs/operators";
 import {Account} from "../../../core/auth/account.model";
-import {Subject} from "rxjs";
+import {Subject, switchMap} from "rxjs";
 
 
 @Component({
@@ -32,19 +32,17 @@ export class InventoryPaintUpdateComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+
     this.accountService
         .getAuthenticationState()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(account => (this.account = account));
-    if (this.account?.email) {
-      this.applicationUserService.findByUserID(this.account.email).subscribe((data)=> this.applicationUser = data.body);
-      this.applicationUserService.findPaintByUserID(this.account.email).subscribe(data => this.ownedPaints = data.body);
-
-    }
-    if(this.applicationUser?.id && this.applicationUser.applicationUserName){
-      this.applicationUserService.queryAvailablePaints(this.applicationUser.id).subscribe(data => this.availablePaints = data.body);
-    }
-
+        .pipe(takeUntil(this.destroy$), switchMap(accountCall => {
+          this.account = accountCall;
+          return this.applicationUserService.findByUserID(accountCall?.email);
+        })).subscribe({next: applicationUserCall =>{
+          this.applicationUser = applicationUserCall.body;
+          this.ownedPaints = this.applicationUser?.ownedPaints;
+          return this.applicationUserService.queryAvailablePaints(this.applicationUser?.id).subscribe(data => this.availablePaints = data.body);
+        }});
   }
 
   add(paintToAdd: IPaint):void {

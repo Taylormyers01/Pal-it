@@ -79,7 +79,8 @@ export class ApplicationUserService {
     }
     return applicationUserCollection;
   }
-  findByUserID(login: string): Observable<HttpResponse<IApplicationUser>> {
+
+  findByUserID(login: string | undefined): Observable<HttpResponse<IApplicationUser>> {
     return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`, {observe: 'response' });
   }
   findPaintByUserID(login: string): Observable<HttpResponse<IPaint[]>>{
@@ -90,7 +91,7 @@ export class ApplicationUserService {
   //   const options = createRequestOption(req);
   //   return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
   // }
-  queryAvailablePaints(id: number): Observable<EntityArrayResponseTypePaint> {
+  queryAvailablePaints(id: number | undefined): Observable<EntityArrayResponseTypePaint> {
     return this.http.get<IPaint[]>(`${this.resourceUrl}/available/${id}`, {observe: 'response' });
   }
   updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{

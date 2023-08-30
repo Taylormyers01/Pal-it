@@ -2,33 +2,28 @@
   mat-card-title {
     font-weight: bold;
   }
-  #save-back-buttons{
-    margin-left: 80%;
-  }
+  /*#save-back-buttons{*/
+  /*  margin-left: 80%;*/
+  /*}*/
   mat-card{
     border-style: solid;
     border-width: thin;
     border-color: whitesmoke;
-    /*justify-content: flex-start !important ;*/
-    /*align-items: flex-start !important;*/
-    /*height: 170px;*/
-    /*width: 250px;*/
-    padding: 10px;
+    font-size: 100%;
     height: 70%;
     width: 90%;
   }
   mat-action-list{
-    align-self: center;
+    padding-left: 50%;
   }
   .owned-paints-cards,.available-paints-cards{
-    height: 400px;
+    height: 50%;
     width: 100%;
     overflow: auto;
   }
-</style>
 
-<h1>{{applicationUser?.id}}</h1>
-<!--<h1>{{ownedPaints?.length}}</h1>-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <h2>Available Paints</h2>
   <div class ="alert alert-warning" id="no-available-paints" *ngIf="availablePaints?.length === 0">
@@ -42,7 +37,14 @@
             <mat-card-title-group>
               <mat-card-title>{{availPaint.brand}}</mat-card-title>
               <mat-card-subtitle>{{availPaint.paintName}}</mat-card-subtitle>
-              <img mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788" >
+              <img *ngIf="!(availPaint.picture)"
+                   mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+                   alt="miniature image">
+              <img *ngIf="availPaint.picture"
+                   mat-card-md-image
+                   [src]="'data:' + availPaint.pictureContentType + ';base64,' + availPaint.picture"
+                   style="max-width: 100%"
+                   alt="miniature image" >
             </mat-card-title-group>
           </mat-card-header>
           <mat-card-actions>
@@ -66,7 +68,14 @@
             <mat-card-title-group>
               <mat-card-title>{{paint.brand}}</mat-card-title>
               <mat-card-subtitle>{{paint.paintName}}</mat-card-subtitle>
-              <img mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788" >
+              <img *ngIf="!(paint.picture)"
+                   mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+                   alt="miniature image">
+              <img *ngIf="paint.picture"
+                   mat-card-md-image
+                   [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
+                   style="max-width: 100%"
+                   alt="miniature image" >
             </mat-card-title-group>
           </mat-card-header>
           <mat-card-actions>
