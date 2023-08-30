@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,6 +7,9 @@ import { finalize } from 'rxjs/operators';
 import { PaintFormService, PaintFormGroup } from './paint-form.service';
 import { IPaint } from '../paint.model';
 import { PaintService } from '../service/paint.service';
+import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import {EventWithContent, EventManager} from "../../../core/util/event-manager.service";
+import {AlertError} from "../../../shared/alert/alert-error.model";
 
 @Component({
   selector: 'jhi-paint-update',
@@ -21,7 +24,11 @@ export class PaintUpdateComponent implements OnInit {
   constructor(
     protected paintService: PaintService,
     protected paintFormService: PaintFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected dataUtils: DataUtils,
+    protected elementRef: ElementRef,
+    protected eventManager: EventManager,
+
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +42,27 @@ export class PaintUpdateComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+  clearInputImage(field: string, fieldContentType: string, idInput: string): void {
+    this.editForm.patchValue({
+      [field]: null,
+      [fieldContentType]: null,
+    });
+    if (idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
+      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
+    }
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
+      error: (err: FileLoadError) =>
+        this.eventManager.broadcast(new EventWithContent<AlertError>('palItApp.error', { ...err, key: 'error.file.' + err.key })),
+    });
   }
 
   save(): void {
