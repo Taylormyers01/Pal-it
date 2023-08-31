@@ -83,7 +83,8 @@ export class ApplicationUserService {
   findByUserID(login: string | undefined): Observable<HttpResponse<IApplicationUser>> {
     return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`, {observe: 'response' });
   }
-  findPaintByUserID(login: string): Observable<HttpResponse<IPaint[]>>{
+
+    findPaintByUserID(login: string | undefined): Observable<HttpResponse<IPaint[]>>{
     return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`,{observe: 'response' });
   }
 

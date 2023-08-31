@@ -22,6 +22,14 @@
         <dd>
           <span>{{ paint.paintName }}</span>
         </dd>
+        <div *ngIf="paint.picture">
+          <img
+            [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
+            style="max-width: 100%"
+            alt="miniature image"
+          />
+          <!--          {{ paint.pictureContentType }}, {{ byteSize(paint.picture) }}-->
+        </div>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

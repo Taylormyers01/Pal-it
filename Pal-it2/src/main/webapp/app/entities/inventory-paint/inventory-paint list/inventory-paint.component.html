@@ -3,10 +3,10 @@
     <span>Inventory Paints</span>
 
     <div class="d-flex justify-content-end">
-<!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
-<!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
-<!--        <span Translate="palItApp.paint.home.refreshListLabel">Refresh list</span>-->
-<!--      </button>-->
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span Translate="palItApp.paint.home.refreshListLabel">Refresh list</span>
+      </button>
 
       <button
         id="jh-create-entity"
@@ -32,44 +32,44 @@
   <div class="table-responsive table-entities" id="entities" *ngIf="paints && paints.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-        <th scope="col" jhiSortBy="id">
-          <div class="d-flex">
-            <span jhiTranslate="global.field.id">ID</span>
-            <fa-icon class="p-1" icon="sort"></fa-icon>
-          </div>
-        </th>
-        <th scope="col" jhiSortBy="brand">
-          <div class="d-flex">
-            <span jhiTranslate="palItApp.paint.brand">Brand</span>
-            <fa-icon class="p-1" icon="sort"></fa-icon>
-          </div>
-        </th>
-        <th scope="col" jhiSortBy="paintName">
-          <div class="d-flex">
-            <span jhiTranslate="palItApp.paint.paintName">Paint Name</span>
-            <fa-icon class="p-1" icon="sort"></fa-icon>
-          </div>
-        </th>
-        <th scope="col"></th>
-      </tr>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="brand">
+            <div class="d-flex">
+              <span jhiTranslate="palItApp.paint.brand">Brand</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="paintName">
+            <div class="d-flex">
+              <span jhiTranslate="palItApp.paint.paintName">Paint Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
-        <td>
-          <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
-        </td>
-        <td>{{ paint.brand }}</td>
-        <td>{{ paint.paintName }}</td>
-        <td class="text-end">
-          <div class="btn-group">
-            <button type="submit" [routerLink]="['/inventory-paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
+          </td>
+          <td>{{ paint.brand }}</td>
+          <td>{{ paint.paintName }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/inventory-paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
