@@ -1,24 +1,38 @@
+<style>
+  #option2{
+    margin-right: 10%;
+  }
+  .alightment{
+    display: inline;
+  }
+</style>
+
+
 <div>
   <h2 id="page-heading" data-cy="PaintHeading">
     <span>Inventory Paints</span>
+      <div class="d-flex justify-content-end">
+        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" >
+        <label class="btn btn-outline-secondary btn-sm" for="option1">Icons</label>
+        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" checked>
+        <label class="btn btn-outline-secondary btn-sm" for="option2">Grid</label>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span Translate="palItApp.paint.home.refreshListLabel">Refresh list</span>
-      </button>
+        <!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+        <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+        <!--        <span >Refresh list</span>-->
+        <!--      </button>-->
+        <button
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          class="btn btn-primary jh-create-entity create-paint"
+          [routerLink]="['/inventory-paint/edit']">
+          <!--        [routerLink]="['/inventory-paint/edit']"> [routerLink]="['/inventory-paint', account?.email ,'edit']">-->
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-paint"
-        [routerLink]="['/inventory-paint/edit']">
-      <!--        [routerLink]="['/inventory-paint/edit']"> [routerLink]="['/inventory-paint', account?.email ,'edit']">-->
+          <fa-icon icon="plus"></fa-icon>
+          <span > Add Paint to Inventory </span>
+        </button>
+      </div>
 
-        <fa-icon icon="plus"></fa-icon>
-        <span > Add Paint to Inventory </span>
-      </button>
-    </div>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
@@ -48,7 +62,7 @@
           <th scope="col" jhiSortBy="paintName">
             <div class="d-flex">
               <span jhiTranslate="palItApp.paint.paintName">Paint Name</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
+<!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
             </div>
           </th>
           <th scope="col"></th>

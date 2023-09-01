@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IPaint} from "../../paint/paint.model";
 import {PaintService} from "../../paint/service/paint.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, Data, ParamMap,} from "@angular/router";
 import {Subject} from "rxjs";
 import {IApplicationUser} from "../../application-user/application-user.model";
 import {takeUntil} from "rxjs/operators";
@@ -9,7 +9,7 @@ import {Account} from "../../../core/auth/account.model";
 import {AccountService} from "../../../core/auth/account.service";
 import {ApplicationUserService,} from "../../application-user/service/application-user.service";
 import {IUser} from "../../user/user.model";
-import {ASC, DESC, SORT} from "../../../config/navigation.constants";
+import {ASC, DESC, } from "../../../config/navigation.constants";
 import { SortService } from 'app/shared/sort/sort.service';
 
 @Component({
@@ -38,6 +38,7 @@ export class InventoryPaintComponent implements OnInit {
   ) {}
 
   trackId = (_index: number, item: IPaint): number => this.paintService.getPaintIdentifier(item);
+
 
 
   ngOnInit(): void {
@@ -84,6 +85,5 @@ export class InventoryPaintComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
-
 
 }

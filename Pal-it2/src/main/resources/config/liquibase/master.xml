@@ -38,10 +38,10 @@
             <column name="picture_content_type" type="varchar(255)"/>
         </addColumn>
     </changeSet>
-    <changeSet author="tmm (generated)" id="1693396637011-1">
-        <dropUniqueConstraint constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
-    </changeSet>
-    <changeSet author="tmm (generated)" id="1693396637011-2">
-        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
-    </changeSet>
+<!--    <changeSet author="tmm (generated)" id="1693396637011-1">-->
+<!--        <dropUniqueConstraint constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>-->
+<!--    </changeSet>-->
+<!--    <changeSet author="tmm (generated)" id="1693396637011-2">-->
+<!--        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>-->
+<!--    </changeSet>-->
 </databaseChangeLog>
