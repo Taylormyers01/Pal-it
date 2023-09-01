@@ -29,20 +29,9 @@ const inventoryRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
-  // {
-  //   path: 'new',
-  //   component: PaintUpdateComponent,
-  //   resolve: {
-  //     paint: PaintRoutingResolveService,
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
   {
     path: 'edit',
     component: InventoryPaintUpdateComponent,
-    // resolve: {
-    //   account: UserRouteAccessService,
-    // },
     canActivate: [UserRouteAccessService],
   },
 ];

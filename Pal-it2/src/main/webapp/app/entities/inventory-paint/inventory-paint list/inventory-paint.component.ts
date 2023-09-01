@@ -24,6 +24,7 @@ export class InventoryPaintComponent implements OnInit {
   predicate = 'id';
   ascending = true;
   isLoading = false;
+  view = 'grid';
 
   private readonly destroy$ = new Subject<void>();
 
@@ -86,4 +87,5 @@ export class InventoryPaintComponent implements OnInit {
     }
   }
 
+  protected readonly localStorage = localStorage;
 }
