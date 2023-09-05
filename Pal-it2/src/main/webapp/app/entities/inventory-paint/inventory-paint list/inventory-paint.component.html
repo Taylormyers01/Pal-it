@@ -93,17 +93,17 @@
     <div *ngSwitchCase="'icon'">
       <div class="container.fluid" id="available-paints-cards" *ngIf="paints && paints.length > 0">
         <div class="row">
-          <div *ngFor="let ownedPaint of paints" class="col">
-            <div class="card text-center" style="width: 14rem;">
+          <div *ngFor="let ownedPaint of paints" class="col-md-2">
+            <div class="card text-center" style="width: 14rem; height: 22rem;">
               <img *ngIf="!(ownedPaint.picture)"
                          [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"
                           src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-                          style="max-width: 100%"
+                          style="max-width: 100%; max-height: 60%;"
                          alt="miniature image">
               <img *ngIf="ownedPaint.picture"
                          [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"
                          [src]="'data:' + ownedPaint.pictureContentType + ';base64,' + ownedPaint.picture"
-                         style="max-width: 100%"
+                          style="max-width: 100%; max-height: 60%;"
                          alt="miniature image" >
               <div class="card-body">
                 <h5 class="card-title">{{ownedPaint.paintName}}</h5>
@@ -123,37 +123,4 @@
 </div>
 
 
-<div class="card text-center" style="width: 12rem;">
-      <img src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788" alt="mini photo">
-      <div class="card-body">
-        <h5 class="card-title">Citadel: Black Templar</h5>
-      </div>
-      <div class="card-footer justify-center">
-        <a href="" class="btn btn-secondary">Go somewhere</a>
-      </div>
-    </div>
 
-  <!--<mat-card >-->
-<!--  <mat-card-header>-->
-<!--    <mat-card-title-group>-->
-<!--      <mat-card-title>{{ownedPaint.brand}}</mat-card-title>-->
-<!--      <mat-card-subtitle>{{ownedPaint.paintName}}</mat-card-subtitle>-->
-<!--      <img *ngIf="!(ownedPaint.picture)"-->
-<!--           [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"-->
-<!--           mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"-->
-<!--           alt="miniature image">-->
-<!--      <img *ngIf="ownedPaint.picture"-->
-<!--           [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"-->
-<!--           mat-card-md-image-->
-<!--           [src]="'data:' + ownedPaint.pictureContentType + ';base64,' + ownedPaint.picture"-->
-<!--           style="max-width: 100%"-->
-<!--           alt="miniature image" >-->
-<!--    </mat-card-title-group>-->
-<!--  </mat-card-header>-->
-<!--  <mat-card-actions>-->
-<!--    <button type="submit" [routerLink]="['/inventory-paint', ownedPaint.id, 'view']" class="btn btn-outline-secondary btn-sm" data-cy="entityDetailsButton">-->
-<!--      <fa-icon icon="eye"></fa-icon>-->
-<!--      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
-<!--    </button>-->
-<!--  </mat-card-actions>-->
-<!--</mat-card>-->

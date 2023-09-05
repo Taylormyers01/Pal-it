@@ -26,7 +26,7 @@
   }
 </style>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
   <title>Update Inventory</title>
 </head>
 <h2>Available Paints</h2>
@@ -35,26 +35,24 @@
   </div>
 <div class="container.fluid" id="available-paints-cards" *ngIf="availablePaints && availablePaints.length > 0">
   <div class="row">
-    <div *ngFor="let availPaint of availablePaints" class="col-xxl-2">
-      <mat-card>
-          <mat-card-header>
-            <mat-card-title-group>
-              <mat-card-title>{{availPaint.brand}}</mat-card-title>
-              <mat-card-subtitle>{{availPaint.paintName}}</mat-card-subtitle>
-              <img *ngIf="!(availPaint.picture)"
-                   mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-                   alt="miniature image">
-              <img *ngIf="availPaint.picture"
-                   mat-card-md-image
-                   [src]="'data:' + availPaint.pictureContentType + ';base64,' + availPaint.picture"
-                   style="max-width: 100%"
-                   alt="miniature image" >
-            </mat-card-title-group>
-          </mat-card-header>
-          <mat-card-actions>
-            <button mat-button (click)="add(availPaint)">Add</button>
-          </mat-card-actions>
-        </mat-card>
+    <div *ngFor="let availPaint of availablePaints" class="col-md-2">
+      <div class="card text-center" style="width: 14rem; height: 22rem;">
+        <img *ngIf="!(availPaint.picture)"
+             style="max-width: 100%; max-height: 60%;"
+             src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+             alt="miniature image">
+        <img *ngIf="availPaint.picture"
+             [src]="'data:' + availPaint.pictureContentType + ';base64,' + availPaint.picture"
+             style="max-width: 100%; max-height: 60%;"
+             alt="miniature image" >
+        <div class="card-body">
+          <h5 class="card-title">{{availPaint.paintName}}</h5>
+          <p class="card-text">{{availPaint.brand}}</p>
+        </div>
+        <div class="card-footer justify-center">
+          <a type="submit" (click)="add(availPaint)" class="btn btn-outline-secondary">add</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -66,62 +64,31 @@
 </div>
 <div class="container.fluid" id="owned-paints-cards" *ngIf="ownedPaints && ownedPaints.length > 0">
   <div class="row">
-      <div *ngFor="let paint of ownedPaints" class="col-xxl-2">
-        <mat-card class="example-card" >
-          <mat-card-header>
-            <mat-card-title-group>
-              <mat-card-title>{{paint.brand}}</mat-card-title>
-              <mat-card-subtitle>{{paint.paintName}}</mat-card-subtitle>
-              <img *ngIf="!(paint.picture)"
-                   mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-                   alt="miniature image">
-              <img *ngIf="paint.picture"
-                   mat-card-md-image
-                   [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
-                   style="max-width: 100%"
-                   alt="miniature image" >
-            </mat-card-title-group>
-          </mat-card-header>
-          <mat-card-actions>
-            <button mat-button (click)="remove(paint)">Remove</button>
-          </mat-card-actions>
-        </mat-card>
+      <div *ngFor="let paint of ownedPaints" class="col-md-2">
+        <div class="card text-center" style="width: 14rem; height: 22rem;">
+          <img *ngIf="!(paint.picture)"
+               sizes="8rem;"
+               [routerLink]="['/inventory-paint', paint.id, 'view']"
+               src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+               style="max-width: 100%; max-height: 60%"
+               alt="miniature image">
+          <img *ngIf="paint.picture"
+               [routerLink]="['/inventory-paint', paint.id, 'view']"
+               [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
+               style="max-width: 100%; max-height: 60%"
+               alt="miniature image" >
+          <div class="card-body">
+            <h5 class="card-title">{{paint.paintName}}</h5>
+            <p class="card-text">{{paint.brand}}</p>
+          </div>
+          <div class="card-footer justify-center">
+            <a type="submit" (click)="remove(paint)" class="btn btn-outline-secondary">remove</a>
+          </div>
+        </div>
       </div>
     <div>
 </div>
-<div id="save-back-buttons">
+<div class="text-end">
   <button mat-button color="primary" (click)="onSave()" id="save-button">Save</button>
   <button mat-button color="warn" (click)="previousState()" id="back-button">Back</button>
 </div>
-
-
-<!--<div class="container.fluid" *ngIf="ownedPaints && ownedPaints.length > 0">-->
-<!--    <div class="row">-->
-<!--      <div *ngFor="let paint of ownedPaints" class="col-xxl-2">-->
-<!--        <mat-card class="example-card" >-->
-<!--          <mat-card-header>-->
-<!--            <mat-card-title-group>-->
-<!--              <mat-card-title>{{paint.brand}}</mat-card-title>-->
-<!--              <mat-card-subtitle>{{paint.paintName}}</mat-card-subtitle>-->
-<!--              <img *ngIf="!(paint.picture)"-->
-<!--                   mat-card-md-image src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"-->
-<!--                   alt="miniature image">-->
-<!--              <img *ngIf="paint.picture"-->
-<!--                   mat-card-md-image-->
-<!--                   [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"-->
-<!--                   style="max-width: 100%"-->
-<!--                   alt="miniature image" >-->
-<!--            </mat-card-title-group>-->
-<!--          </mat-card-header>-->
-<!--          <mat-card-actions>-->
-<!--            <button mat-button (click)="remove(paint)">Remove</button>-->
-<!--          </mat-card-actions>-->
-<!--        </mat-card>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--<div id="save-back-buttons-test">-->
-<!--  <button mat-button color="primary" (click)="onSave()" id="save-button-test">Save</button>-->
-<!--  <button mat-button color="warn" (click)="previousState()" id="back-button-test">Back</button>-->
-<!--</div>-->
-

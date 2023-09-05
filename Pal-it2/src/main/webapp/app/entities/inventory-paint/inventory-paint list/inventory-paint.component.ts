@@ -58,6 +58,10 @@ export class InventoryPaintComponent implements OnInit {
     if(this.paints) {
       this.paints = this.refineData(this.paints);
     }
+    // if(this.applicationUser?.ownedPaints){
+    //   this.paints = this.applicationUser.ownedPaints;
+    // }
+
   }
 
 

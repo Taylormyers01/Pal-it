@@ -190,20 +190,9 @@ public class ApplicationUserResource {
             .build();
     }
     @GetMapping("/application-users/user/{login}")
-    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable String login){
         log.debug("REST request to get ApplicationUser by UserID : {}", login);
-        List<ApplicationUser> users = new ArrayList<>();
-        if (eagerload) {
-             users =applicationUserRepository.findAllWithEagerRelationships();
-        } else {
-            users = applicationUserRepository.findAll();
-        }
-        for(ApplicationUser u: users){
-            if(Objects.equals(u.getInternalUser().getEmail(), login)){
-                return ResponseUtil.wrapOrNotFound(applicationUserRepository.findOneWithEagerRelationships(u.getId()));
-            }
-        }
-        return null;
+        return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByEmail(login));
     }
 
     @GetMapping("/application-users/paint/{login}")

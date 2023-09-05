@@ -66,9 +66,10 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.applicationUser.ownedPaints = this.ownedPaints;
       this.applicationUserService.update(this.applicationUser).subscribe(data => this.applicationUser = data.body);
     }
-    this.router.navigate(['/inventory-paint'], {
-      relativeTo: this.activatedRoute,
-    });
+    // this.router.navigate(['/inventory-paint'], {
+    //   relativeTo: this.activatedRoute,
+    // });
+    this.previousState();
   }
   previousState(): void {
     window.history.back();
