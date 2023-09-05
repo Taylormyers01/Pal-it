@@ -15,6 +15,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./inventory-paint/inventory-paint.module').then(m => m.InventoryPaintModule),
       },
       {
+        path: 'inventory-formula',
+        data: { pageTitle: 'palItApp.formula.home.title' },
+        loadChildren: () => import('./inventory-formula/inventory-formula.module').then(m => m.InventoryFormulaModule),
+      },
+      {
         path: 'formula',
         data: { pageTitle: 'palItApp.formula.home.title' },
         loadChildren: () => import('./formula/formula.module').then(m => m.FormulaModule),
