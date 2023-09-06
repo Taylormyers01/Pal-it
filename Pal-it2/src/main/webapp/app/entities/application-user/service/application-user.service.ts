@@ -95,7 +95,10 @@ export class ApplicationUserService {
   queryAvailablePaints(id: number | undefined): Observable<EntityArrayResponseTypePaint> {
     return this.http.get<IPaint[]>(`${this.resourceUrl}/available/${id}`, {observe: 'response' });
   }
-  updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{
-    return this.http.put<boolean>(`${this.resourceUrl}/available/${id}`, paints, {observe: 'response'});
+  // updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{
+  //   return this.http.put<boolean>(`${this.resourceUrl}/available/${id}`, paints, {observe: 'response'});
+  // }
+  findUserWithFormulas(email: string):Observable<EntityResponseType>{
+    return this.http.get<IApplicationUser>(`${this.resourceUrl}/withformula/${email}`, {observe: 'response'});
   }
 }

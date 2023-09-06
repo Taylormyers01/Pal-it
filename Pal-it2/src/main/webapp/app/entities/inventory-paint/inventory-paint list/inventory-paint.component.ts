@@ -25,6 +25,7 @@ export class InventoryPaintComponent implements OnInit {
   ascending = true;
   isLoading = false;
   view = 'grid';
+  protected readonly localStorage = localStorage;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -35,6 +36,7 @@ export class InventoryPaintComponent implements OnInit {
       private accountService: AccountService,
       protected applicationUserService: ApplicationUserService,
       protected sortService: SortService,
+
 
   ) {}
 
@@ -48,48 +50,47 @@ export class InventoryPaintComponent implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe(account => (this.account = account));
     if (this.account?.email) {
-      this.applicationUserService.findByUserID(this.account.email).subscribe(user => this.applicationUser = user.body);
+      this.applicationUserService.findByUserID(this.account.email).subscribe(user => {
+        this.applicationUser = user.body;
+        this.paints = user.body?.ownedPaints;
+      });
     }
-    this.load();
+    // this.load();
   }
 
   load(): void{
-    this.applicationUserService.findPaintByUserID(this.account?.email).subscribe(data => this.paints = data.body);
-    if(this.paints) {
-      this.paints = this.refineData(this.paints);
-    }
-    // if(this.applicationUser?.ownedPaints){
-    //   this.paints = this.applicationUser.ownedPaints;
+    // this.applicationUserService.findPaintByUserID(this.account?.email).subscribe(data => this.paints = data.body);
+    // if(this.paints) {
+    //   this.paints = this.refineData(this.paints);
     // }
-
   }
 
 
 
-  navigateToWithComponentValues(): void {
-    this.handleNavigation(this.predicate, this.ascending);
-  }
-  protected refineData(data: IPaint[]): IPaint[] {
-    return data.sort(this.sortService.startSort(this.predicate, this.ascending ? 1 : -1));
-  }
-  protected handleNavigation(predicate?: string, ascending?: boolean): void {
-    const queryParamsObj = {
-      sort: this.getSortQueryParam(predicate, ascending),
-    };
+  // navigateToWithComponentValues(): void {
+  //   this.handleNavigation(this.predicate, this.ascending);
+  // }
+  // protected refineData(data: IPaint[]): IPaint[] {
+  //   return data.sort(this.sortService.startSort(this.predicate, this.ascending ? 1 : -1));
+  // }
+  // protected handleNavigation(predicate?: string, ascending?: boolean): void {
+  //   const queryParamsObj = {
+  //     sort: this.getSortQueryParam(predicate, ascending),
+  //   };
+  //
+  //   this.router.navigate(['./'], {
+  //     relativeTo: this.activatedRoute,
+  //     queryParams: queryParamsObj,
+  //   });
+  // }
+  // protected getSortQueryParam(predicate = this.predicate, ascending = this.ascending): string[] {
+  //   const ascendingQueryParam = ascending ? ASC : DESC;
+  //   if (predicate === '') {
+  //     return [];
+  //   } else {
+  //     return [predicate + ',' + ascendingQueryParam];
+  //   }
+  // }
 
-    this.router.navigate(['./'], {
-      relativeTo: this.activatedRoute,
-      queryParams: queryParamsObj,
-    });
-  }
-  protected getSortQueryParam(predicate = this.predicate, ascending = this.ascending): string[] {
-    const ascendingQueryParam = ascending ? ASC : DESC;
-    if (predicate === '') {
-      return [];
-    } else {
-      return [predicate + ',' + ascendingQueryParam];
-    }
-  }
 
-  protected readonly localStorage = localStorage;
 }

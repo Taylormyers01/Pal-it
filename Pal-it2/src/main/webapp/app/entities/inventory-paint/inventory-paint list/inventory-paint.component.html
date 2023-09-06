@@ -6,7 +6,7 @@
 
 
 <div>
-  <h2 id="page-heading" data-cy="PaintHeading">
+  <h2 id="page-heading" data-cy="InventoryPaintHeading">
     <span>Inventory Paints</span>
 
 
@@ -46,7 +46,8 @@
       <div class="table-responsive table-entities" id="entities" *ngIf="paints && paints.length > 0" >
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" >
+<!--              (sortChange)="navigateToWithComponentValues()"-->
               <th scope="col" jhiSortBy="id">
                 <div class="d-flex">
                   <span jhiTranslate="global.field.id">ID</span>
@@ -118,7 +119,6 @@
       </div>
     </div>
   </div>
-
 
 </div>
 
