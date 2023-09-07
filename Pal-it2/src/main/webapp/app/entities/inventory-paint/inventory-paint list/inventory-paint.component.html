@@ -6,18 +6,16 @@
 
 
 <div>
-  <h2 id="page-heading" data-cy="InventoryPaintHeading">
-    <span>Inventory Paints</span>
-
-
+  <h2 id="page-heading">
+    <h1 class="text-center display-4">Inventory Paints</h1><br><br>
       <div class="d-flex justify-content-end">
 
 
-        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" (click)="localStorage.setItem('view', 'grid')">
+        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" [checked]="view == 'grid'" (click)="localStorage.setItem('view', 'grid')">
         <label class="btn btn-outline-secondary btn" for="option2">Grid</label>
-        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" (click)="localStorage.setItem('view', 'icon')">
+        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" [checked]="view == 'icon'"  (click)="localStorage.setItem('view', 'icon')">
         <label class="btn btn-outline-secondary btn" for="option1">Icons</label>
-        <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;</span><br><hr>
 
 
         <button
@@ -92,6 +90,7 @@
 
 
     <div *ngSwitchCase="'icon'">
+      <hr><br>
       <div class="container.fluid" id="available-paints-cards" *ngIf="paints && paints.length > 0">
         <div class="row">
           <div *ngFor="let ownedPaint of paints" class="col-md-2">

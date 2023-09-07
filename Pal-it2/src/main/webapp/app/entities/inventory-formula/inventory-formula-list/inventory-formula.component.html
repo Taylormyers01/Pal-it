@@ -23,15 +23,22 @@
       <button ngbDropdownItem *ngFor="let formula of formulas" (click)="loadFormula(formula.id)">{{formula.formulaName}}</button>
     </div>
   </div>
-  <div class="alert alert-warning" *ngIf="!selectedFormula">
-    <span >No formula selected</span>
+  <a class="btn btn-outline-secondary" id="new-formula-button" href="/inventory-formula/new">New Formula</a>
+<!--  /{{this.applicationUser?.id}}-->
+  <hr><br>
+  <div class="alert alert-warning"  *ngIf="!selectedFormula">
+    <span >Please select a formula from the dropdown</span>
   </div>
   <div *ngIf="selectedFormula">
     <div class="text-center">
-      <h3>{{selectedFormula.formulaName}}</h3>
+      <h3 class="display-2">{{selectedFormula.formulaName}}</h3>
+      <a class="btn btn-secondary" href="/inventory-formula/{{selectedFormula.id}}/edit">Edit Formula</a>
       <div class="row">
+        <div class="alert alert-warning" *ngIf="selectedFormula.paintFormulas?.length === 0">
+          <span >No paints within this formula</span>
+        </div>
         <div *ngFor="let formulaPaint of selectedFormula.paintFormulas" class="col-md-2">
-          <div class="card text-center" style="width: 14rem; height: 22rem;">
+          <div class="card text-center mb-1" style="width: 14rem; height: 22rem;">
             <img *ngIf="!(formulaPaint.picture)"
                  style="max-width: 100%; max-height: 60%;"
                  src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
@@ -52,6 +59,7 @@
       </div>
     </div>
   </div>
+
   </body>
   </html>
 

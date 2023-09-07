@@ -1,43 +1,46 @@
-
-<header class="text-center" style="height: 40%; background-color: black">
+<style>
+  img{
+    box-shadow: 0 0 100px black inset;
+    filter: brightness(40%);
+  }
+  header{
+    z-index: 1;
+  }
+  #welcome-to-palit{
+    z-index: 2;
+  }
+</style>
+<div id="welcome-to-palit" class="text-center  card-img-overlay" style="margin-top: 20%;">
+  <span class="display-1" style="color: white; outline: black">Welcome, to PalIt!</span>
+</div>
+<div class="text-center" style="height: 40%; background-color: black">
   <ngb-carousel
     [showNavigationArrows]="false"
     [showNavigationIndicators]="false"
+    [interval]="10000"
   >
     <!--  *ngIf="images"-->
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
-        <img style="height: 40rem" src="../../../content/images/mini-images/goblin.jpg" alt="Random slide" />
-      </div>
-      <div class="carousel-caption">
-        <h3></h3>
-        <p></p>
+        <img style="height: 40rem;" src="../../../content/images/mini-images/goblin.jpg" alt="Random slide" />
       </div>
     </ng-template>
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
         <img style="height: 40rem"  src="../../../content/images/mini-images/undead.jpg" alt="Random slide" />
       </div>
-      <div class="carousel-caption">
-        <h3></h3>
-        <p></p>
-      </div>
     </ng-template>
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
         <img style="height: 40rem"  src="../../../content/images/mini-images/wizard.jpg" alt="Random slide" />
       </div>
-      <div class="carousel-caption">
-        <h3></h3>
-        <p></p>
-      </div>
     </ng-template>
   </ngb-carousel>
-</header>
+</div>
 <div class="row">
 
   <div class="col-md-9">
-    <h1 class="display-4"><span >Welcome, to Pal IT!</span></h1>
+<!--    <h1 class="display-4"><span >Welcome, to Pal IT!</span></h1>-->
 <!--    <a href="../resources/public/paintdetails.html">Testing</a>-->
 
     <div [ngSwitch]="account !== null">

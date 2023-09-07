@@ -1,35 +1,18 @@
 <style>
-  mat-card-title {
-    font-weight: bold;
-  }
-  mat-card{
-    border-style: solid;
-    border-width: thin;
-    border-color: whitesmoke;
-    font-size: 100%;
-    height: 100%;
-    width: 100%;
-  }
-  mat-action-list{
-    padding-left: 50%;
-  }
   #available-paints-cards, #owned-paints-cards{
     width: 100%;
-    /*height: 50%;*/
-    max-height: 50%;
+
+    height: 50%;
     margin-bottom: 1%;
-    /*overflow: auto;*/
-  }
-  #save-back-buttons{
-    padding-top: 1%;
-    margin-left: 75%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 </style>
 <head>
 <!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
   <title>Update Inventory</title>
 </head>
-<h2>Available Paints</h2>
+<h2 class="display-4 text-center">Available Paints</h2><br><hr>
   <div class ="alert alert-warning" id="no-available-paints" *ngIf="availablePaints?.length === 0">
     <span>No available paints to add to inventory</span>
   </div>
@@ -58,37 +41,38 @@
 </div>
 
 
-<h2>Currently Owned Paints</h2>
+<h2 class="display-4 text-center">Currently Owned Paints</h2><br><hr>
 <div class="alert alert-warning" id="no-result" *ngIf="ownedPaints?.length === 0">
   <span>No Paint found for user</span>
 </div>
-<div class="container.fluid" id="owned-paints-cards" *ngIf="ownedPaints && ownedPaints.length > 0">
-  <div class="row">
-      <div *ngFor="let paint of ownedPaints" class="col-md-2">
-        <div class="card text-center" style="width: 14rem; height: 22rem;">
-          <img *ngIf="!(paint.picture)"
-               sizes="8rem;"
-               [routerLink]="['/inventory-paint', paint.id, 'view']"
-               src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-               style="max-width: 100%; max-height: 60%"
-               alt="miniature image">
-          <img *ngIf="paint.picture"
-               [routerLink]="['/inventory-paint', paint.id, 'view']"
-               [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
-               style="max-width: 100%; max-height: 60%"
-               alt="miniature image" >
-          <div class="card-body">
-            <h5 class="card-title">{{paint.paintName}}</h5>
-            <p class="card-text">{{paint.brand}}</p>
-          </div>
-          <div class="card-footer justify-center">
-            <a type="submit" (click)="remove(paint)" class="btn btn-outline-secondary">remove</a>
+<div class="container.fluid"  id="owned-paints-cards" *ngIf="ownedPaints && ownedPaints.length > 0">
+    <div class="row">
+        <div *ngFor="let paint of ownedPaints" class="col-md-2">
+          <div class="card text-center" style="width: 14rem; height: 22rem;">
+            <img *ngIf="!(paint.picture)"
+                 sizes="8rem;"
+                 [routerLink]="['/inventory-paint', paint.id, 'view']"
+                 src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+                 style="max-width: 100%; max-height: 60%"
+                 alt="miniature image">
+            <img *ngIf="paint.picture"
+                 [routerLink]="['/inventory-paint', paint.id, 'view']"
+                 [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
+                 style="max-width: 100%; max-height: 60%"
+                 alt="miniature image" >
+            <div class="card-body">
+              <h5 class="card-title">{{paint.paintName}}</h5>
+              <p class="card-text">{{paint.brand}}</p>
+            </div>
+            <div class="card-footer justify-center">
+              <a type="submit" (click)="remove(paint)" class="btn btn-outline-secondary">remove</a>
+            </div>
           </div>
         </div>
-      </div>
-    <div>
-</div>
+      <div>
+  </div>
+</div></div>
 <div class="text-end">
-  <button mat-button color="primary" (click)="onSave()" id="save-button">Save</button>
-  <button mat-button color="warn" (click)="previousState()" id="back-button">Back</button>
+  <button class="btn btn-primary" (click)="onSave()" id="save-button">Save</button>
+  <button class="btn btn-secondary" (click)="previousState()" id="back-button">Back</button>
 </div>

@@ -229,4 +229,9 @@ public class ApplicationUserResource {
         log.debug("REST request to get ApplicationUser by UserID with Formulas : {}", email);
         return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByEmailWithFormula(email));
     }
+    @GetMapping("/application-users/ownedpaints/{id}")
+    public ResponseEntity<ApplicationUser> findApplicationUserByIdWithFormula(@PathVariable Long id) {
+        log.debug("REST request to get ApplicationUser by UserID with Formulas : {}", id);
+        return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByIdWithFormula(id));
+    }
 }

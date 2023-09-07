@@ -53,4 +53,10 @@ public interface ApplicationUserRepository extends ApplicationUserRepositoryWith
         "select applicationUser from ApplicationUser applicationUser left join fetch applicationUser.internalUser left join fetch applicationUser.ownedPaints left join fetch applicationUser.formulaNames where applicationUser.internalUser.email =:email"
     )
     Optional<ApplicationUser> findApplicationUserByEmailWithFormula(@Param("email")String email);
+    @Query(
+        "select applicationUser from ApplicationUser applicationUser left join fetch applicationUser.ownedPaints where applicationUser.id =:id"
+    )
+    Optional<ApplicationUser> findApplicationUserByIdWithFormula(@Param("id")Long id);
+
+
 }
