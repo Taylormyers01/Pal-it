@@ -69,7 +69,7 @@ public class ApplicationUserResource {
     /**
      * {@code PUT  /application-users/:id} : Updates an existing applicationUser.
      *
-     * @param id the id of the applicationUser to save.
+     * @param id              the id of the applicationUser to save.
      * @param applicationUser the applicationUser to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated applicationUser,
      * or with status {@code 400 (Bad Request)} if the applicationUser is not valid,
@@ -103,7 +103,7 @@ public class ApplicationUserResource {
     /**
      * {@code PATCH  /application-users/:id} : Partial updates given fields of an existing applicationUser, field will ignore if it is null
      *
-     * @param id the id of the applicationUser to save.
+     * @param id              the id of the applicationUser to save.
      * @param applicationUser the applicationUser to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated applicationUser,
      * or with status {@code 400 (Bad Request)} if the applicationUser is not valid,
@@ -111,7 +111,7 @@ public class ApplicationUserResource {
      * or with status {@code 500 (Internal Server Error)} if the applicationUser couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/application-users/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/application-users/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ApplicationUser> partialUpdateApplicationUser(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody ApplicationUser applicationUser
@@ -189,46 +189,44 @@ public class ApplicationUserResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
     @GetMapping("/application-users/user/{login}")
-    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+    public ResponseEntity<ApplicationUser> getApplicationUserByUserID(@PathVariable String login) {
         log.debug("REST request to get ApplicationUser by UserID : {}", login);
-        List<ApplicationUser> users = new ArrayList<>();
-        if (eagerload) {
-             users =applicationUserRepository.findAllWithEagerRelationships();
-        } else {
-            users = applicationUserRepository.findAll();
-        }
-        for(ApplicationUser u: users){
-            if(Objects.equals(u.getInternalUser().getEmail(), login)){
-                return ResponseUtil.wrapOrNotFound(applicationUserRepository.findOneWithEagerRelationships(u.getId()));
-            }
-        }
-        return null;
+        return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByEmail(login));
     }
 
     @GetMapping("/application-users/paint/{login}")
-    public ResponseEntity<Set<Paint>> getPaintByUserLogin(@PathVariable String login,@RequestParam(required = false, defaultValue = "false") boolean eagerload){
+    public ResponseEntity<Set<Paint>> getPaintByUserLogin(@PathVariable String login, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get Paint Set by UserID : {}", login);
         List<ApplicationUser> users = new ArrayList<>();
         if (eagerload) {
-            users =applicationUserRepository.findAllWithEagerRelationships();
+            users = applicationUserRepository.findAllWithEagerRelationships();
         } else {
             users = applicationUserRepository.findAll();
         }
-        for(ApplicationUser u: users){
-            if(Objects.equals(u.getInternalUser().getEmail(), login)){
+        for (ApplicationUser u : users) {
+            if (Objects.equals(u.getInternalUser().getEmail(), login)) {
                 return new ResponseEntity<>(applicationUserRepository.findOneWithEagerRelationships(u.getId()).get().getOwnedPaints(), HttpStatus.OK);
             }
         }
         return null;
     }
+
     @GetMapping("/application-users/available/{id}")
-    public ResponseEntity<Set<Paint>> getUnownedPaintByUserLogin(@PathVariable Long id){
+    public ResponseEntity<Set<Paint>> getUnownedPaintByUserLogin(@PathVariable Long id) {
         return applicationUserService.getUnownedPaintByUserLogin(id);
     }
+
     @PutMapping("/application-users/available/{id}")
-    public ResponseEntity<Boolean> setOwnedPaintByUserLogin(@PathVariable(value = "id") Long id, @NotNull @RequestBody Paint[] paints){
+    public ResponseEntity<Boolean> setOwnedPaintByUserLogin(@PathVariable(value = "id") Long id, @NotNull @RequestBody Paint[] paints) {
         log.debug("REST request to update user Owned Paint id:{} paint: {} ", id, paints);
         return applicationUserService.setOwnedPaintByUserLogin(id, paints);
+    }
+
+    @GetMapping("/application-users/withformula/{email}")
+    public ResponseEntity<ApplicationUser> getApplicationUserByUserIDWithFormula(@PathVariable String email) {
+        log.debug("REST request to get ApplicationUser by UserID with Formulas : {}", email);
+        return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByEmailWithFormula(email));
     }
 }

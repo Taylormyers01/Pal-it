@@ -8,6 +8,8 @@ import {InventoryPaintDetailComponent} from "../inventory-paint-detail/intentory
 import {PaintRoutingResolveService} from "../../paint/route/paint-routing-resolve.service";
 import {ApplicationUserRoutingResolveService} from "../../application-user/route/application-user-routing-resolve.service";
 import {InventoryPaintUpdateComponent} from "../inventory-paint-update/inventory-paint-update.component";
+import {UserService} from "../../user/user.service";
+import {UserManagementResolve} from "../../../admin/user-management/user-management.route";
 
 
 const inventoryRoute: Routes = [
@@ -27,20 +29,9 @@ const inventoryRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
-  // {
-  //   path: 'new',
-  //   component: PaintUpdateComponent,
-  //   resolve: {
-  //     paint: PaintRoutingResolveService,
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
   {
-    path: ':id/edit',
+    path: 'edit',
     component: InventoryPaintUpdateComponent,
-    resolve: {
-      applicationUser: ApplicationUserRoutingResolveService,
-    },
     canActivate: [UserRouteAccessService],
   },
 ];

@@ -40,4 +40,5 @@ public interface FormulaRepository extends FormulaRepositoryWithBagRelationships
 
     @Query("select formula from Formula formula left join fetch formula.user where formula.id =:id")
     Optional<Formula> findOneWithToOneRelationships(@Param("id") Long id);
+
 }

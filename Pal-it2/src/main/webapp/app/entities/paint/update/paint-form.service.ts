@@ -20,6 +20,8 @@ type PaintFormGroupContent = {
   id: FormControl<IPaint['id'] | NewPaint['id']>;
   brand: FormControl<IPaint['brand']>;
   paintName: FormControl<IPaint['paintName']>;
+  picture: FormControl<IPaint['picture']>;
+  pictureContentType: FormControl<IPaint['pictureContentType']>;
   users: FormControl<IPaint['users']>;
   formulas: FormControl<IPaint['formulas']>;
   minautures: FormControl<IPaint['minautures']>;
@@ -48,6 +50,8 @@ export class PaintFormService {
       paintName: new FormControl(paintRawValue.paintName, {
         validators: [Validators.required],
       }),
+      picture: new FormControl(paintRawValue.picture),
+      pictureContentType: new FormControl(paintRawValue.pictureContentType),
       users: new FormControl(paintRawValue.users ?? []),
       formulas: new FormControl(paintRawValue.formulas ?? []),
       minautures: new FormControl(paintRawValue.minautures ?? []),

@@ -7,9 +7,10 @@ import {InventoryPaintUpdateComponent} from "./inventory-paint-update/inventory-
 import {MatCardModule} from '@angular/material/card';
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
-  imports: [SharedModule, InventoryPaintRoutingModule, MatCardModule, MatButtonModule, MatGridListModule],
+    imports: [SharedModule, InventoryPaintRoutingModule, MatCardModule, MatButtonModule, MatGridListModule, MatButtonToggleModule],
   declarations: [InventoryPaintComponent, InventoryPaintDetailComponent, InventoryPaintUpdateComponent],
 })
 export class InventoryPaintModule {}

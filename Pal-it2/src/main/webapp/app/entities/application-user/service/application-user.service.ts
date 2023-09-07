@@ -79,21 +79,26 @@ export class ApplicationUserService {
     }
     return applicationUserCollection;
   }
-  findByUserID(login: string): Observable<IApplicationUser> {
-    return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`);
+
+  findByUserID(login: string | undefined): Observable<HttpResponse<IApplicationUser>> {
+    return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`, {observe: 'response' });
   }
-  findPaintByUserID(login: string): Observable<IPaint[]>{
-    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`);
+
+    findPaintByUserID(login: string | undefined): Observable<HttpResponse<IPaint[]>>{
+    return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`,{observe: 'response' });
   }
 
   // queryPaint(login: string, req?: any): Observable<EntityArrayResponseTypePaint> {
   //   const options = createRequestOption(req);
   //   return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
   // }
-  queryAvailablePaints(id: number): Observable<EntityArrayResponseTypePaint> {
+  queryAvailablePaints(id: number | undefined): Observable<EntityArrayResponseTypePaint> {
     return this.http.get<IPaint[]>(`${this.resourceUrl}/available/${id}`, {observe: 'response' });
   }
-  updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{
-    return this.http.put<boolean>(`${this.resourceUrl}/available/${id}`, paints, {observe: 'response'});
+  // updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{
+  //   return this.http.put<boolean>(`${this.resourceUrl}/available/${id}`, paints, {observe: 'response'});
+  // }
+  findUserWithFormulas(email: string):Observable<EntityResponseType>{
+    return this.http.get<IApplicationUser>(`${this.resourceUrl}/withformula/${email}`, {observe: 'response'});
   }
 }

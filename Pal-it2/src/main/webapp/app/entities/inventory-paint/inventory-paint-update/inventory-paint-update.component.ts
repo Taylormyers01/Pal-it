@@ -4,6 +4,10 @@ import {PaintService} from "../../paint/service/paint.service";
 import {IApplicationUser} from "../../application-user/application-user.model";
 import {IPaint} from "../../paint/paint.model";
 import {ApplicationUserService} from "../../application-user/service/application-user.service";
+import {AccountService} from "../../../core/auth/account.service";
+import {takeUntil} from "rxjs/operators";
+import {Account} from "../../../core/auth/account.model";
+import {Subject, switchMap} from "rxjs";
 
 
 @Component({
@@ -11,35 +15,36 @@ import {ApplicationUserService} from "../../application-user/service/application
   templateUrl: './inventory-paint-update.component.html',
 })
 export class InventoryPaintUpdateComponent implements OnInit {
-  applicationUser: IApplicationUser | null = null;
+  applicationUser?: IApplicationUser | null = null;
   ownedPaints?: IPaint[] | null = [];
-  newPaints: IPaint[] = [];
+  account: Account | null = null;
   availablePaints?: IPaint[] | null = [];
 
+  private readonly destroy$ = new Subject<void>();
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected paintService: PaintService,
-    protected applicationUserService: ApplicationUserService,
     public router: Router,
+    private accountService: AccountService,
+    protected applicationUserService: ApplicationUserService,
+
+
     ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({applicationUser}) => {
-      this.applicationUser = applicationUser;
-    });
-    // if(this.applicationUser) {
-    //   this.ownedPaints = this.applicationUser.ownedPaints;
-    // }
-    if(this.applicationUser?.applicationUserName) {
-      this.applicationUserService.findPaintByUserID(this.applicationUser.applicationUserName).subscribe(data => this.ownedPaints = data);
-    }
-    this.filterPaints()
+
+    this.accountService
+        .getAuthenticationState()
+        .pipe(takeUntil(this.destroy$), switchMap(accountCall => {
+          this.account = accountCall;
+          return this.applicationUserService.findByUserID(accountCall?.email);
+        })).subscribe({next: applicationUserCall =>{
+          this.applicationUser = applicationUserCall.body;
+          this.ownedPaints = this.applicationUser?.ownedPaints;
+          return this.applicationUserService.queryAvailablePaints(this.applicationUser?.id).subscribe(data => this.availablePaints = data.body);
+        }});
   }
-  filterPaints(): void {
-    if (this.applicationUser) {
-      this.applicationUserService.queryAvailablePaints(this.applicationUser.id).subscribe(data => this.availablePaints = data.body);
-    }
-  }
+
   add(paintToAdd: IPaint):void {
     if(!this.ownedPaints?.includes(paintToAdd)){
       this.ownedPaints?.push(paintToAdd);
@@ -61,9 +66,10 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.applicationUser.ownedPaints = this.ownedPaints;
       this.applicationUserService.update(this.applicationUser).subscribe(data => this.applicationUser = data.body);
     }
-    this.router.navigate(['/inventory-paint'], {
-      relativeTo: this.activatedRoute,
-    });
+    // this.router.navigate(['/inventory-paint'], {
+    //   relativeTo: this.activatedRoute,
+    // });
+    this.previousState();
   }
   previousState(): void {
     window.history.back();

@@ -1,23 +1,37 @@
+<style>
+  #option2{
+    margin-right: 10%;
+  }
+</style>
+
+
 <div>
-  <h2 id="page-heading" data-cy="PaintHeading">
+  <h2 id="page-heading" data-cy="InventoryPaintHeading">
     <span>Inventory Paints</span>
 
-    <div class="d-flex justify-content-end">
-<!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
-<!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
-<!--        <span Translate="palItApp.paint.home.refreshListLabel">Refresh list</span>-->
-<!--      </button>-->
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-paint"
-        [routerLink]="['/inventory-paint', applicationUser?.id ,'edit']">
+      <div class="d-flex justify-content-end">
 
-        <fa-icon icon="plus"></fa-icon>
-        <span > Add Paint to Inventory </span>
-      </button>
-    </div>
+
+        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" (click)="localStorage.setItem('view', 'grid')">
+        <label class="btn btn-outline-secondary btn" for="option2">Grid</label>
+        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" (click)="localStorage.setItem('view', 'icon')">
+        <label class="btn btn-outline-secondary btn" for="option1">Icons</label>
+        <span>&nbsp;&nbsp;</span>
+
+
+        <button
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          class="btn btn-primary jh-create-entity create-paint"
+          [routerLink]="['/inventory-paint/edit']">
+
+
+          <fa-icon icon="plus"></fa-icon>
+          <span > Add Paint to Inventory </span>
+        </button>
+      </div>
+
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
@@ -27,49 +41,86 @@
   <div class="alert alert-warning" id="no-result" *ngIf="paints?.length === 0">
     <span jhiTranslate="palItApp.paint.home.notFound">No Paints found</span>
   </div>
+  <div [ngSwitch]="localStorage.getItem('view')">
+    <div *ngSwitchCase="'grid'">
+      <div class="table-responsive table-entities" id="entities" *ngIf="paints && paints.length > 0" >
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" >
+<!--              (sortChange)="navigateToWithComponentValues()"-->
+              <th scope="col" jhiSortBy="id">
+                <div class="d-flex">
+                  <span jhiTranslate="global.field.id">ID</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="brand">
+                <div class="d-flex">
+                  <span jhiTranslate="palItApp.paint.brand">Brand</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="paintName">
+                <div class="d-flex">
+                  <span jhiTranslate="palItApp.paint.paintName">Paint Name</span>
+    <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+                </div>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
+              </td>
+              <td>{{ paint.brand }}</td>
+              <td>{{ paint.paintName }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button type="submit" [routerLink]="['/inventory-paint', paint.id, 'view']" class="btn btn-outline-secondary btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="paints && paints.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-        <th scope="col" jhiSortBy="id">
-          <div class="d-flex">
-            <span jhiTranslate="global.field.id">ID</span>
-            <fa-icon class="p-1" icon="sort"></fa-icon>
+
+    <div *ngSwitchCase="'icon'">
+      <div class="container.fluid" id="available-paints-cards" *ngIf="paints && paints.length > 0">
+        <div class="row">
+          <div *ngFor="let ownedPaint of paints" class="col-md-2">
+            <div class="card text-center" style="width: 14rem; height: 22rem;">
+              <img *ngIf="!(ownedPaint.picture)"
+                         [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"
+                          src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+                          style="max-width: 100%; max-height: 60%;"
+                         alt="miniature image">
+              <img *ngIf="ownedPaint.picture"
+                         [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"
+                         [src]="'data:' + ownedPaint.pictureContentType + ';base64,' + ownedPaint.picture"
+                          style="max-width: 100%; max-height: 60%;"
+                         alt="miniature image" >
+              <div class="card-body">
+                <h5 class="card-title">{{ownedPaint.paintName}}</h5>
+                <p class="card-text">{{ownedPaint.brand}}</p>
+              </div>
+              <div class="card-footer justify-center">
+                <a type="submit" [routerLink]="['/inventory-paint', ownedPaint.id, 'view']" class="btn btn-outline-secondary">view</a>
+              </div>
+            </div>
           </div>
-        </th>
-        <th scope="col" jhiSortBy="brand">
-          <div class="d-flex">
-            <span jhiTranslate="palItApp.paint.brand">Brand</span>
-            <fa-icon class="p-1" icon="sort"></fa-icon>
-          </div>
-        </th>
-        <th scope="col" jhiSortBy="paintName">
-          <div class="d-flex">
-            <span jhiTranslate="palItApp.paint.paintName">Paint Name</span>
-            <fa-icon class="p-1" icon="sort"></fa-icon>
-          </div>
-        </th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
-        <td>
-          <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
-        </td>
-        <td>{{ paint.brand }}</td>
-        <td>{{ paint.paintName }}</td>
-        <td class="text-end">
-          <div class="btn-group">
-            <button type="submit" [routerLink]="['/inventory-paint', paint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>
+
+
+

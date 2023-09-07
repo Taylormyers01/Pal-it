@@ -27,4 +27,21 @@
     <include file="config/liquibase/changelog/20230822191244_added_entity_constraints_Miniature.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+
+    <changeSet author="tmm (generated)" id="1693396637011-3">
+        <addColumn tableName="paint">
+            <column name="picture" type="blob"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="tmm (generated)" id="1693396637011-4">
+        <addColumn tableName="paint">
+            <column name="picture_content_type" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+<!--    <changeSet author="tmm (generated)" id="1693396637011-1">-->
+<!--        <dropUniqueConstraint constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>-->
+<!--    </changeSet>-->
+<!--    <changeSet author="tmm (generated)" id="1693396637011-2">-->
+<!--        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>-->
+<!--    </changeSet>-->
 </databaseChangeLog>

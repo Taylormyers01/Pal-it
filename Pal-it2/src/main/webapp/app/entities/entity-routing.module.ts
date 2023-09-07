@@ -6,13 +6,18 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'paint',
-        data: { pageTitle: 'palItApp.paint.home.title' },
+        data: { pageTitle: 'Inventory' },
         loadChildren: () => import('./paint/paint.module').then(m => m.PaintModule),
       },
       {
         path: 'inventory-paint',
         data: { pageTitle: 'palItApp.paint.home.title' },
         loadChildren: () => import('./inventory-paint/inventory-paint.module').then(m => m.InventoryPaintModule),
+      },
+      {
+        path: 'inventory-formula',
+        data: { pageTitle: 'palItApp.formula.home.title' },
+        loadChildren: () => import('./inventory-formula/inventory-formula.module').then(m => m.InventoryFormulaModule),
       },
       {
         path: 'formula',

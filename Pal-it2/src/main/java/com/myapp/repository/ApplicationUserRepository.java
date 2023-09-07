@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
+
 /**
  * Spring Data JPA repository for the ApplicationUser entity.
  *
@@ -43,4 +45,12 @@ public interface ApplicationUserRepository extends ApplicationUserRepositoryWith
     )
     Optional<ApplicationUser> findOneWithToOneRelationships(@Param("id") Long id);
 
+    @Query(
+        "select applicationUser from ApplicationUser applicationUser left join fetch applicationUser.internalUser left join fetch applicationUser.ownedPaints where applicationUser.internalUser.email =:email"
+    )
+    Optional<ApplicationUser> findApplicationUserByEmail(@Param("email")String email);
+    @Query(
+        "select applicationUser from ApplicationUser applicationUser left join fetch applicationUser.internalUser left join fetch applicationUser.ownedPaints left join fetch applicationUser.formulaNames where applicationUser.internalUser.email =:email"
+    )
+    Optional<ApplicationUser> findApplicationUserByEmailWithFormula(@Param("email")String email);
 }

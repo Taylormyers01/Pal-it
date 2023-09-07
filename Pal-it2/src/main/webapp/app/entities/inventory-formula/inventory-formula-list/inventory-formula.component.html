@@ -1,0 +1,58 @@
+ <html data-bs-theme="light" lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>passion project</title>
+  </head>
+  <h2 id="page-heading" data-cy="InventoryFormulaHeading">
+    <span>Inventory Formulas</span>
+  </h2><br><br>
+  <body style="background: inherit">
+  <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+    <button
+      type="button"
+      class="btn btn-outline-secondary me-2"
+      id="dropdownManual"
+      ngbDropdownAnchor
+      (focus)="myDrop.open()"
+    >
+      Formulas
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownManual" >
+      <button ngbDropdownItem *ngFor="let formula of formulas" (click)="loadFormula(formula.id)">{{formula.formulaName}}</button>
+    </div>
+  </div>
+  <div class="alert alert-warning" *ngIf="!selectedFormula">
+    <span >No formula selected</span>
+  </div>
+  <div *ngIf="selectedFormula">
+    <div class="text-center">
+      <h3>{{selectedFormula.formulaName}}</h3>
+      <div class="row">
+        <div *ngFor="let formulaPaint of selectedFormula.paintFormulas" class="col-md-2">
+          <div class="card text-center" style="width: 14rem; height: 22rem;">
+            <img *ngIf="!(formulaPaint.picture)"
+                 style="max-width: 100%; max-height: 60%;"
+                 src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+                 alt="miniature image">
+            <img *ngIf="formulaPaint.picture"
+                 [src]="'data:' + formulaPaint.pictureContentType + ';base64,' + formulaPaint.picture"
+                 style="max-width: 100%; max-height: 60%;"
+                 alt="miniature image" >
+            <div class="card-body">
+              <h5 class="card-title">{{formulaPaint.paintName}}</h5>
+              <p class="card-text">{{formulaPaint.brand}}</p>
+            </div>
+<!--            <div class="card-footer justify-center">-->
+<!--              <a type="submit" (click)="add(availPaint)" class="btn btn-outline-secondary">add</a>-->
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+  </html>
+
+
