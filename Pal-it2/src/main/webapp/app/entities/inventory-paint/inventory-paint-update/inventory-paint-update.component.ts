@@ -19,8 +19,10 @@ export class InventoryPaintUpdateComponent implements OnInit {
   ownedPaints?: IPaint[] | null = [];
   account: Account | null = null;
   availablePaints?: IPaint[] | null = [];
-
   private readonly destroy$ = new Subject<void>();
+
+
+
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected paintService: PaintService,
@@ -30,6 +32,10 @@ export class InventoryPaintUpdateComponent implements OnInit {
 
 
     ) {}
+  sleep(ms: number | undefined):Promise<any>{
+  return new Promise(r => setTimeout(r, ms));
+  }
+
 
   ngOnInit(): void {
 
@@ -71,7 +77,8 @@ export class InventoryPaintUpdateComponent implements OnInit {
     // });
     this.previousState();
   }
-  previousState(): void {
+  async previousState(): Promise<void> {
+    await this.sleep(1000);
     window.history.back();
   }
 }

@@ -40,4 +40,7 @@ public interface MiniatureRepository extends MiniatureRepositoryWithBagRelations
 
     @Query("select miniature from Miniature miniature left join fetch miniature.user where miniature.id =:id")
     Optional<Miniature> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("select distinct miniature from Miniature miniature left join fetch miniature.user left join fetch miniature.miniatureFormulas where miniature.user.id =:id")
+    List<Miniature> findAllByUserId(@Param("id") Long id);
 }

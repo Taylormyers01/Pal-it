@@ -13,6 +13,7 @@ import { IApplicationUser } from 'app/entities/application-user/application-user
 import { ApplicationUserService } from 'app/entities/application-user/service/application-user.service';
 import {AccountService} from "../../../core/auth/account.service";
 import {Account} from "../../../core/auth/account.model";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'jhi-formula-update',
@@ -21,7 +22,7 @@ import {Account} from "../../../core/auth/account.model";
 export class InventoryFormulaUpdateComponent implements OnInit {
   isSaving = false;
   formula: IFormula | null = null;
-
+  paintForm = new FormControl('');
   account: Account | null = null;
   paintsSharedCollection: IPaint[] = [];
   // applicationUsersSharedCollection: IApplicationUser[] = [];
@@ -35,7 +36,9 @@ export class InventoryFormulaUpdateComponent implements OnInit {
     protected applicationUserService: ApplicationUserService,
     protected activatedRoute: ActivatedRoute,
     protected accountService: AccountService,
-  ) {}
+  ) {
+
+  }
 
   comparePaint = (o1: IPaint | null, o2: IPaint | null): boolean => this.paintService.comparePaint(o1, o2);
 
