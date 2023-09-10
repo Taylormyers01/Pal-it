@@ -106,4 +106,6 @@ export class InventoryFormulaUpdateComponent implements OnInit {
       }
     }
   }
+
+  protected readonly self = self;
 }

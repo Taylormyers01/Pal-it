@@ -10,18 +10,19 @@
   </h2><br><br>
   <body style="background: inherit">
   <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
-    <button
-      type="button"
-      class="btn btn-outline-secondary me-2"
-      id="dropdownManual"
-      ngbDropdownAnchor
-      (focus)="myDrop.open()"
-    >
-      Formulas
-    </button>
-    <div ngbDropdownMenu aria-labelledby="dropdownManual" >
-      <button ngbDropdownItem *ngFor="let formula of formulas" (click)="loadFormula(formula.id)">{{formula.formulaName}}</button>
-    </div>
+<!--    <button-->
+<!--      type="button"-->
+<!--      class="btn btn-outline-secondary me-2"-->
+<!--      id="dropdownManual"-->
+<!--      ngbDropdownAnchor-->
+<!--      (focus)="myDrop.open()"-->
+<!--    >-->
+<!--      Formulas-->
+<!--    </button>-->
+<!--    <div ngbDropdownMenu aria-labelledby="dropdownManual" >-->
+<!--      <button ngbDropdownItem *ngFor="let formula of formulas" (click)="loadFormula(formula.id)">{{formula.formulaName}}</button>-->
+<!--    </div>-->
+    <button type="button" class="btn btn-outline-secondary" (click)="open(content)">Select Formula</button>
   </div>
   <a class="btn btn-outline-secondary" id="new-formula-button" href="/inventory-formula/new">New Formula</a>
 <!--  /{{this.applicationUser?.id}}-->
@@ -61,6 +62,21 @@
     </div>
   </div>
 
+  <ng-template #content let-offcanvas>
+    <div class="offcanvas-header" >
+      <h4 class="offcanvas-title" id="offcanvas-basic-title">Select Formula</h4>
+<!--      <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>-->
+      <hr>
+    </div>
+    <div class="offcanvas-body">
+        <div class="row-cols-1">
+        <a *ngFor="let formula of formulas"
+           (click)="loadFormula(formula.id)"
+           style="max-width: 60%"
+        class="btn  btn-outline-secondary mb-1" >{{formula.formulaName}}</a>
+      </div>
+    </div>
+  </ng-template>
   </body>
   </html>
 
