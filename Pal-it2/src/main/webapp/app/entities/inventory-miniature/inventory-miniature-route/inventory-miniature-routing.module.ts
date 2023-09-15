@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import {InventoryMiniatureListComponent} from "../inventory-miniature-list/inventory-miniature-list.component";
+import {InventoryMiniatureUpdateComponent} from "../inventory-miniature-update/inventory-miniature-update.component";
+import {MiniatureRoutingResolveService} from "../../miniature/route/miniature-routing-resolve.service";
 
 
 const inventoryRoute: Routes = [
@@ -27,14 +29,14 @@ const inventoryRoute: Routes = [
   //   },
   //   canActivate: [UserRouteAccessService],
   // },
-  // {
-  //   path: 'new',
-  //   component: InventoryFormulaUpdateComponent,
-  //     resolve: {
-  //       applicationUser: FormulaRoutingResolveService,
-  //     },
-  //   canActivate: [UserRouteAccessService],
-  // },
+  {
+    path: 'new',
+    component: InventoryMiniatureUpdateComponent,
+      resolve: {
+        miniature: MiniatureRoutingResolveService,
+      },
+    canActivate: [UserRouteAccessService],
+  },
 ];
 
 @NgModule({

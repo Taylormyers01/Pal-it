@@ -48,7 +48,6 @@ export class InventoryFormulaUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ formula }) => {
       this.formula = formula;
-      console.log(formula)
       if (formula) {
         this.updateForm(formula);
       }
