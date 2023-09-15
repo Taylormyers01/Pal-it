@@ -10,10 +10,6 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ paint.id }}</span>
-        </dd>
         <dt><span jhiTranslate="palItApp.paint.brand">Brand</span></dt>
         <dd>
           <span>{{ paint.brand }}</span>
@@ -25,15 +21,15 @@
         <div *ngIf="paint.picture">
           <img
             [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
-            style="max-width: 100%"
+            style="max-width: 10rem; max-height: 10rem; outline-color: black"
             alt="miniature image"
+            class="img-thumbnail"
           />
-          <!--          {{ paint.pictureContentType }}, {{ byteSize(paint.picture) }}-->
         </div>
       </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      <button type="submit" (click)="previousState()" class="btn btn-info m-3" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
       </button>
 
 <!--      <button type="button" [routerLink]="['/paint', paint.id, 'edit']" class="btn btn-primary">-->

@@ -101,4 +101,7 @@ export class ApplicationUserService {
   findUserWithFormulas(email: string):Observable<EntityResponseType>{
     return this.http.get<IApplicationUser>(`${this.resourceUrl}/withformula/${email}`, {observe: 'response'});
   }
+  findApplicationUserByIdWithFormula(id: number):Observable<EntityResponseType>{
+    return this.http.get<IApplicationUser>(`${this.resourceUrl}/ownedpaints/${id}`, {observe: 'response'});
+  }
 }

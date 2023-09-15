@@ -5,6 +5,7 @@ import com.myapp.repository.PaintRepository;
 import com.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -178,5 +180,11 @@ public class PaintResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+    @PostMapping("/paintslist")
+    public ResponseEntity<Paint> createListPaint(@Valid @RequestBody ArrayList<Paint> paints) throws URISyntaxException {
+//        log.debug("REST request to save Paint : {}", paint);
+        List<Paint> result = paintRepository.saveAll(paints);
+        return new ResponseEntity (result, HttpStatus.OK);
     }
 }

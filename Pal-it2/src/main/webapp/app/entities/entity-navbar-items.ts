@@ -13,6 +13,10 @@ export const EntityNavbarItems = [
     route: 'inventory-formula',
   },
   {
+    name: 'InventoryMiniature',
+    route: 'inventory-miniature',
+  },
+  {
     name: 'Formula',
     route: 'formula',
     translationKey: 'global.menu.entities.formula',

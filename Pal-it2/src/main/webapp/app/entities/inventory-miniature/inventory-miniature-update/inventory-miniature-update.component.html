@@ -1,0 +1,121 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-miniature-heading" data-cy="MiniatureCreateUpdateHeading" jhiTranslate="palItApp.miniature.home.createOrEditLabel">
+        Create or edit a Miniature
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="palItApp.miniature.miniatureName" for="field_miniatureName">Miniature Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="miniatureName"
+            id="field_miniatureName"
+            data-cy="miniatureName"
+            formControlName="miniatureName"
+          />
+          <div
+            *ngIf="
+              editForm.get('miniatureName')!.invalid && (editForm.get('miniatureName')!.dirty || editForm.get('miniatureName')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('miniatureName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="palItApp.miniature.picture" for="field_picture">Picture</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('pictureContentType')!.value + ';base64,' + editForm.get('picture')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('picture')!.value"
+              alt="miniature image"
+            />
+            <div *ngIf="editForm.get('picture')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('pictureContentType')!.value }}, {{ byteSize(editForm.get('picture')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('picture', 'pictureContentType', 'file_picture')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_picture"
+              data-cy="picture"
+              (change)="setFileData($event, 'picture', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="picture" id="field_picture" data-cy="picture" formControlName="picture" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="pictureContentType"
+            id="field_pictureContentType"
+            formControlName="pictureContentType"
+          />
+        </div>
+
+<!--        <div class="row mb-3">-->
+<!--          <label jhiTranslate="palItApp.miniature.miniatureFormula" for="field_miniatureFormulas">Miniature Formula</label>-->
+<!--          <select-->
+<!--            class="form-control"-->
+<!--            id="field_miniatureFormulas"-->
+<!--            data-cy="miniatureFormula"-->
+<!--            multiple-->
+<!--            name="miniatureFormulas"-->
+<!--            formControlName="miniatureFormulas"-->
+<!--            [compareWith]="comparePaint"-->
+<!--          >-->
+<!--            <option [ngValue]="paintOption" *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints">{{ paintOption.paintName }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+        <label class="form-label">Paint testing</label>
+        <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
+          <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control" >
+            <input class="form-check-input" type="checkbox" formControlName="miniatureFormulas" id="field_miniatureFormula" >
+            <label for="field_miniatureFormula">{{paintOption.paintName}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
