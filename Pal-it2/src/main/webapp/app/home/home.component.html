@@ -9,11 +9,14 @@
   #welcome-to-palit{
     z-index: 2;
   }
+  .mini-pic{
+    vertical-align: middle;
+  }
 </style>
 <div id="welcome-to-palit" class="text-center  card-img-overlay" style="margin-top: 20%;">
   <span class="display-1" style="color: white; outline: black">Welcome, to PalIt!</span>
 </div>
-<div class="text-center" style="height: 40%; background-color: black">
+<div class="text-center" style="height: 50rem; background-color: black">
   <ngb-carousel
     [showNavigationArrows]="false"
     [showNavigationIndicators]="false"
@@ -21,17 +24,17 @@
   >
     <!--  *ngIf="images"-->
     <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
+      <div class="mini-pic">
         <img style="height: 40rem;" src="../../../content/images/mini-images/goblin.jpg" alt="Random slide" />
       </div>
     </ng-template>
     <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
+      <div class="mini-pic">
         <img style="height: 40rem"  src="../../../content/images/mini-images/undead.jpg" alt="Random slide" />
       </div>
     </ng-template>
     <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
+      <div class="mini-pic">
         <img style="height: 40rem"  src="../../../content/images/mini-images/wizard.jpg" alt="Random slide" />
       </div>
     </ng-template>

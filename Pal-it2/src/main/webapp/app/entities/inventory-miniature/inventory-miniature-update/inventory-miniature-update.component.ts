@@ -98,6 +98,14 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.miniatureService.create(miniature));
     }
   }
+  onChange(paintOption: IPaint):void {
+    if(this.editForm.value.miniatureFormulas?.includes(paintOption)) {
+      this.editForm.value.miniatureFormulas = this.editForm.value.miniatureFormulas.filter((item) => item !== paintOption);
+    }else{
+      this.editForm.value.miniatureFormulas?.push(paintOption);
+    }
+    console.log(this.editForm.value.miniatureFormulas);
+  }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IMiniature>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
@@ -140,5 +148,8 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
     }
   }
 
+
   protected readonly console = console;
+
+
 }

@@ -78,29 +78,18 @@
           />
         </div>
 
-<!--        <div class="row mb-3">-->
-<!--          <label jhiTranslate="palItApp.miniature.miniatureFormula" for="field_miniatureFormulas">Miniature Formula</label>-->
-<!--          <select-->
-<!--            class="form-control"-->
-<!--            id="field_miniatureFormulas"-->
-<!--            data-cy="miniatureFormula"-->
-<!--            multiple-->
-<!--            name="miniatureFormulas"-->
-<!--            formControlName="miniatureFormulas"-->
-<!--            [compareWith]="comparePaint"-->
-<!--          >-->
-<!--            <option [ngValue]="paintOption" *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints">{{ paintOption.paintName }}</option>-->
-<!--          </select>-->
-<!--        </div>-->
         <label class="form-label">Paint testing</label>
         <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
-          <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control" >
-            <input class="form-check-input" type="checkbox" formControlName="miniatureFormulas" id="field_miniatureFormula" >
-            <label for="field_miniatureFormula">{{paintOption.paintName}}</label>
+          <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">
+            <input (change)="onChange(paintOption)"
+                   type="checkbox"
+                   value="{{paintOption}}"
+                   [checked]="editForm.value.miniatureFormulas?.includes(paintOption)"value
+            />{{paintOption.brand}}: {{paintOption.paintName}}
           </div>
         </div>
       </div>
-
+      <p>{{editForm.value.miniatureFormulas}}</p>
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

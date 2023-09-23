@@ -24,7 +24,7 @@
 <!--    </div>-->
     <button type="button" class="btn btn-outline-secondary" (click)="open(content)">Select Formula</button>
   </div>
-  <a class="btn btn-outline-secondary" id="new-formula-button" href="/inventory-formula/new">New Formula</a>
+  <button class="btn btn-outline-secondary" id="new-formula-button" [routerLink]="['/inventory-formula/new']">New Formula</button>
 <!--  /{{this.applicationUser?.id}}-->
   <hr><br>
   <div class="alert alert-warning"  *ngIf="!selectedFormula">
@@ -33,7 +33,7 @@
   <div *ngIf="selectedFormula">
     <div class="text-center">
       <h3 class="display-2">{{selectedFormula.formulaName}}</h3>
-      <a class="btn btn-secondary" href="/inventory-formula/{{selectedFormula.id}}/edit">Edit Formula</a>
+      <button class="btn btn-secondary" [routerLink]="['/inventory-formula',selectedFormula.id,'edit']">Edit Formula</button>
       <hr>
       <div class="row">
         <div class="alert alert-warning " *ngIf="selectedFormula.paintFormulas?.length === 0">

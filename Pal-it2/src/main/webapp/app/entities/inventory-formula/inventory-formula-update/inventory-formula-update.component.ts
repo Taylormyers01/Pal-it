@@ -62,12 +62,31 @@ export class InventoryFormulaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const formula = this.formulaFormService.getFormula(this.editForm);
+    console.log(formula);
     formula.user = this.applicationUsersSharedCollection;
     if (formula.id !== null) {
       this.subscribeToSaveResponse(this.formulaService.update(formula));
     } else {
       this.subscribeToSaveResponse(this.formulaService.create(formula));
     }
+  }
+  onChange(paintOption: IPaint): void {
+      // this.editForm.value.paintFormulas.filter((item)=> item.id === paintOption.id).length > 0
+      if (this.editForm.getRawValue().paintFormulas?.includes(paintOption)) {
+        this.editForm.value.paintFormulas = this.editForm.getRawValue().paintFormulas?.filter((item) => item.id !== paintOption.id);
+      } else {
+        this.editForm.getRawValue().paintFormulas?.push(paintOption);
+      }
+      // console.log(this.editForm.value.paintFormulas);
+
+  }
+  valueChecked(paintOption: IPaint):boolean {
+    if(this.editForm.value.paintFormulas) {
+      if (this.editForm.value.paintFormulas.filter(item => item.id === paintOption.id).length > 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IFormula>>): void {
@@ -107,4 +126,9 @@ export class InventoryFormulaUpdateComponent implements OnInit {
   }
 
   protected readonly self = self;
+
+
+  protected readonly length = length;
+
+
 }

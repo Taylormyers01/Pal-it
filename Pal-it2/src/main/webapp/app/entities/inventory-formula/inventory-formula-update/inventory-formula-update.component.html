@@ -53,12 +53,20 @@
           </select>
                      <!--            <a class="btn" type="checkbox"  *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints">{{paintOption.brand}}: {{ paintOption.paintName }}</a>-->
         </div>
+<!--        <label class="form-label">Paint testing</label>-->
+<!--        <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">-->
+<!--          <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">-->
+<!--            <input (change)="onChange(paintOption)"-->
+<!--                   type="checkbox"-->
+<!--                   value="{{paintOption}}"-->
+<!--                    [checked]="valueChecked(paintOption)"-->
+<!--            />{{paintOption.brand}}: {{paintOption.paintName}}-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
-
-
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
         </button>
 
         <button
@@ -68,13 +76,13 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
         </button>
-        <script>
-          $(document).ready(function() {
-            $('#field_paintFormulas').multiselect();
-          });
-        </script>
+<!--        <script>-->
+<!--          $(document).ready(function() {-->
+<!--            $('#field_paintFormulas').multiselect();-->
+<!--          });-->
+<!--        </script>-->
       </div>
     </form>
   </div>
