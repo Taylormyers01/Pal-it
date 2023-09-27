@@ -7,8 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
 import { InventoryFormulaFormService } from './inventory-formula-form.service';
-import { FormulaService } from '../service/formula.service';
-import { IFormula } from '../formula.model';
+import { FormulaService} from "../../formula/service/formula.service";
+import { IFormula} from "../../formula/formula.model";
 import { IPaint } from 'app/entities/paint/paint.model';
 import { PaintService } from 'app/entities/paint/service/paint.service';
 import { IApplicationUser } from 'app/entities/application-user/application-user.model';

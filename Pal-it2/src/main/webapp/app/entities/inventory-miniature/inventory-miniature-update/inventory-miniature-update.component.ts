@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { InventoryMiniatureFormService, MiniatureFormGroup } from './inventory-miniature-form.service';
 import { IMiniature} from "../../miniature/miniature.model";
@@ -16,6 +16,8 @@ import { IApplicationUser } from 'app/entities/application-user/application-user
 import { ApplicationUserService } from 'app/entities/application-user/service/application-user.service';
 import {Account} from "../../../core/auth/account.model";
 import {AccountService} from "../../../core/auth/account.service";
+
+
 
 @Component({
   selector: 'jhi-miniature-update',
@@ -54,7 +56,6 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
       if (miniature) {
         this.updateForm(miniature);
       }
-
       this.loadRelationshipsOptions();
     });
   }
@@ -98,12 +99,19 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.miniatureService.create(miniature));
     }
   }
-  onChange(paintOption: IPaint):void {
-    if(this.editForm.value.miniatureFormulas?.includes(paintOption)) {
-      this.editForm.value.miniatureFormulas = this.editForm.value.miniatureFormulas.filter((item) => item !== paintOption);
+
+  onChange(paintId: number):void {
+    let miniFormula = this.editForm.getRawValue().miniatureFormulas as IPaint[];
+    const paint = this.applicationUsersSharedCollection?.ownedPaints?.filter(ownedPaint => ownedPaint.id===paintId)[0] as IPaint;
+    if(!miniFormula.includes(paint)) {
+      console.log(`adding paint ${paintId}`);
+      miniFormula.push(paint);
     }else{
-      this.editForm.value.miniatureFormulas?.push(paintOption);
+        console.log('removing paint');
+        miniFormula = miniFormula.filter(ownedPaint => ownedPaint.id !== paintId);
+
     }
+    this.editForm.patchValue({miniatureFormulas: miniFormula});
     console.log(this.editForm.value.miniatureFormulas);
   }
 
@@ -147,9 +155,5 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
       }
     }
   }
-
-
-  protected readonly console = console;
-
 
 }

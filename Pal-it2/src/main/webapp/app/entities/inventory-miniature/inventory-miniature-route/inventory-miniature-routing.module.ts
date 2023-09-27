@@ -21,14 +21,14 @@ const inventoryRoute: Routes = [
   //   },
   //   canActivate: [UserRouteAccessService],
   // },
-  // {
-  //   path: ':id/edit',
-  //   component: InventoryFormulaUpdateComponent,
-  //   resolve: {
-  //     formula: FormulaRoutingResolveService,
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
+  {
+    path: ':id/edit',
+    component: InventoryMiniatureUpdateComponent,
+    resolve: {
+      formula: MiniatureRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
   {
     path: 'new',
     component: InventoryMiniatureUpdateComponent,

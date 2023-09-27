@@ -6,7 +6,8 @@ export interface IMiniature {
   miniatureName?: string | null;
   picture?: string | null;
   pictureContentType?: string | null;
-  miniatureFormulas?: Pick<IPaint, 'id' | 'paintName'>[] | null;
+  // miniatureFormulas?: Pick<IPaint, 'id' | 'paintName'>[] | null;
+  miniatureFormulas?: IPaint[] | null;
   user?: Pick<IApplicationUser, 'id' | 'applicationUserName'> | null;
 }
 

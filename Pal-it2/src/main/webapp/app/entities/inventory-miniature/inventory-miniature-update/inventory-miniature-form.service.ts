@@ -45,7 +45,10 @@ export class InventoryMiniatureFormService {
       miniatureName: new FormControl(miniatureRawValue.miniatureName, {
         validators: [Validators.required],
       }),
-      picture: new FormControl(miniatureRawValue.picture),
+      picture: new FormControl(
+        {value: miniatureRawValue.picture, disabled: true},
+        {validators: [Validators.required], nonNullable: true}
+      ),
       pictureContentType: new FormControl(miniatureRawValue.pictureContentType),
       miniatureFormulas: new FormControl(miniatureRawValue.miniatureFormulas ?? []),
       user: new FormControl(miniatureRawValue.user),

@@ -32,7 +32,6 @@ export class InventoryMiniatureListComponent implements OnInit {
             this.appUser = data.body;
 
             if(this.appUser?.id){
-              console.log("made it here!")
               return this.miniatureService.findAllByUserId(this.appUser.id)
                   .subscribe(miniatureCall => this.minis = miniatureCall.body);
             }
