@@ -8,11 +8,6 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="palItApp.miniature.miniatureName" for="field_miniatureName">Miniature Name</label>
           <input
@@ -77,19 +72,17 @@
             formControlName="pictureContentType"
           />
         </div>
-        <label class="form-label">Paint testing</label>
+        <label class="form-label">Paint</label>
         <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
           <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">
             <input type="checkbox"
                    (click)="onChange(paintOption.id)"
-                   [checked]="editForm.value.miniatureFormulas?.includes(paintOption)"
+                   [defaultChecked]="valueContained(paintOption.id)"
             />{{paintOption.brand}}: {{paintOption.paintName}}
           </div>
-          <!--                   [checked]="editForm.value.miniatureFormulas?.includes(paintOption)"-->
 
         </div>
       </div>
-      <p>{{editForm.value.miniatureFormulas}}</p>
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

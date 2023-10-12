@@ -54,6 +54,7 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ miniature }) => {
       this.miniature = miniature;
       if (miniature) {
+        console.log(miniature);
         this.updateForm(miniature);
       }
       this.loadRelationshipsOptions();
@@ -100,10 +101,19 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
     }
   }
 
+  valueContained(paintId: number):boolean{
+    const miniFormula = this.editForm.value.miniatureFormulas as IPaint[];
+    if(miniFormula.filter(item => item.id === paintId).length > 0){
+      return true;
+    }
+    return false;
+  }
+
   onChange(paintId: number):void {
-    let miniFormula = this.editForm.getRawValue().miniatureFormulas as IPaint[];
+    let miniFormula = this.editForm.value.miniatureFormulas as IPaint[];
+    console.log(miniFormula);
     const paint = this.applicationUsersSharedCollection?.ownedPaints?.filter(ownedPaint => ownedPaint.id===paintId)[0] as IPaint;
-    if(!miniFormula.includes(paint)) {
+    if(!this.valueContained(paintId)) {
       console.log(`adding paint ${paintId}`);
       miniFormula.push(paint);
     }else{
@@ -138,10 +148,10 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
     this.miniature = miniature;
     this.miniatureFormService.resetForm(this.editForm, miniature);
 
-    this.paintsSharedCollection = this.paintService.addPaintToCollectionIfMissing<IPaint>(
-      this.paintsSharedCollection,
-      ...(miniature.miniatureFormulas ?? [])
-    );
+    // this.paintsSharedCollection = this.paintService.addPaintToCollectionIfMissing<IPaint>(
+    //   this.paintsSharedCollection,
+    //   ...(miniature.miniatureFormulas ?? [])
+    // );
   }
 
   protected loadRelationshipsOptions(): void {

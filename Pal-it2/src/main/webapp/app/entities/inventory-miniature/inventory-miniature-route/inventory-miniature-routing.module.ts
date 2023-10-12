@@ -25,7 +25,7 @@ const inventoryRoute: Routes = [
     path: ':id/edit',
     component: InventoryMiniatureUpdateComponent,
     resolve: {
-      formula: MiniatureRoutingResolveService,
+      miniature: MiniatureRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },

@@ -70,19 +70,24 @@ export class InventoryFormulaUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.formulaService.create(formula));
     }
   }
-  onChange(paintOption: IPaint): void {
-      // this.editForm.value.paintFormulas.filter((item)=> item.id === paintOption.id).length > 0
-      if (this.editForm.getRawValue().paintFormulas?.includes(paintOption)) {
-        this.editForm.value.paintFormulas = this.editForm.getRawValue().paintFormulas?.filter((item) => item.id !== paintOption.id);
-      } else {
-        this.editForm.getRawValue().paintFormulas?.push(paintOption);
-      }
-      // console.log(this.editForm.value.paintFormulas);
+  onChange(paintId: number):void {
+    let paintFormula = this.editForm.value.paintFormulas as IPaint[];
+    console.log(paintFormula);
+    const paint = this.applicationUsersSharedCollection?.ownedPaints?.filter(ownedPaint => ownedPaint.id===paintId)[0] as IPaint;
+    if(!this.valueContained(paintId)) {
+      console.log(`adding paint ${paintId}`);
+      paintFormula.push(paint);
+    }else{
+      console.log('removing paint');
+      paintFormula = paintFormula.filter(ownedPaint => ownedPaint.id !== paintId);
 
+    }
+    this.editForm.patchValue({paintFormulas: paintFormula});
+    console.log(this.editForm.value.paintFormulas);
   }
-  valueChecked(paintOption: IPaint):boolean {
+  valueContained(paintOption: number):boolean {
     if(this.editForm.value.paintFormulas) {
-      if (this.editForm.value.paintFormulas.filter(item => item.id === paintOption.id).length > 0) {
+      if (this.editForm.value.paintFormulas.filter(item => item.id === paintOption).length > 0) {
         return true;
       }
     }

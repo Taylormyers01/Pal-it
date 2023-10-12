@@ -19,6 +19,8 @@ export class InventoryPaintUpdateComponent implements OnInit {
   ownedPaints?: IPaint[] | null = [];
   account: Account | null = null;
   availablePaints?: IPaint[] | null = [];
+  allPaints: IPaint[] | null = [];
+  view?: string | null = null;
   private readonly destroy$ = new Subject<void>();
 
 
@@ -38,7 +40,12 @@ export class InventoryPaintUpdateComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    if(localStorage.getItem('view')){
+      this.view = localStorage.getItem('view');
+    }
+    else{
+      this.view = 'grid';
+    }
     this.accountService
         .getAuthenticationState()
         .pipe(takeUntil(this.destroy$), switchMap(accountCall => {
@@ -49,6 +56,7 @@ export class InventoryPaintUpdateComponent implements OnInit {
           this.ownedPaints = this.applicationUser?.ownedPaints;
           return this.applicationUserService.queryAvailablePaints(this.applicationUser?.id).subscribe(data => this.availablePaints = data.body);
         }});
+    this.paintService.query().subscribe(item => this.allPaints = item.body)
   }
 
   add(paintToAdd: IPaint):void {
@@ -72,13 +80,30 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.applicationUser.ownedPaints = this.ownedPaints;
       this.applicationUserService.update(this.applicationUser).subscribe(data => this.applicationUser = data.body);
     }
-    // this.router.navigate(['/inventory-paint'], {
-    //   relativeTo: this.activatedRoute,
-    // });
     this.previousState();
   }
   async previousState(): Promise<void> {
     await this.sleep(1000);
     window.history.back();
   }
+
+  valueContained(id: number): boolean{
+    if(this.ownedPaints) {
+      return this.ownedPaints.filter(item => item.id===id).length > 0;
+    }
+    return false;
+  }
+
+  onChange(paintOption: IPaint):void {
+    if (this.valueContained(paintOption.id)){
+      this.ownedPaints = this.ownedPaints?.filter(item => item.id !== paintOption.id)
+    }
+    else{
+      this.ownedPaints?.push(paintOption)
+    }
+  }
+
+  protected readonly localStorage = localStorage;
+
+
 }

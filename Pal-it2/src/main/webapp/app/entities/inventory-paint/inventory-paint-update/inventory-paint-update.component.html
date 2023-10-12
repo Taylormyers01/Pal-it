@@ -12,67 +12,108 @@
 <!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
   <title>Update Inventory</title>
 </head>
-<h2 class="display-4 text-center">Available Paints</h2><br><hr>
-  <div class ="alert alert-warning" id="no-available-paints" *ngIf="availablePaints?.length === 0">
-    <span>No available paints to add to inventory</span>
-  </div>
-<div class="container.fluid" id="available-paints-cards" *ngIf="availablePaints && availablePaints.length > 0">
-  <div class="row">
-    <div *ngFor="let availPaint of availablePaints" class="col-md-2">
-      <div class="card text-center" style="width: 14rem; height: 22rem;">
-        <img *ngIf="!(availPaint.picture)"
-             style="max-width: 100%; max-height: 60%;"
-             src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-             alt="miniature image">
-        <img *ngIf="availPaint.picture"
-             [src]="'data:' + availPaint.pictureContentType + ';base64,' + availPaint.picture"
-             style="max-width: 100%; max-height: 60%;"
-             alt="miniature image" >
-        <div class="card-body">
-          <h5 class="card-title">{{availPaint.paintName}}</h5>
-          <p class="card-text">{{availPaint.brand}}</p>
-        </div>
-        <div class="card-footer justify-center">
-          <a type="submit" (click)="add(availPaint)" class="btn btn-outline-secondary">add</a>
+
+
+<div [ngSwitch]="localStorage.getItem('view')">
+
+  <div *ngSwitchCase="'grid'">
+    <h2 class="display-4 text-center">Available Paints</h2><br>
+    <div class="d-flex justify-content-end">
+      <input type="radio" class="btn-check" name="options" id="option_2" autocomplete="off" [checked]="view == 'grid'" (click)="localStorage.setItem('view', 'grid')">
+      <label class="btn btn-outline-secondary btn" for="option2">Grid</label>
+      <input type="radio" class="btn-check" name="options" id="option_1" autocomplete="off" [checked]="view == 'icon'"  (click)="localStorage.setItem('view', 'icon')">
+      <label class="btn btn-outline-secondary btn" for="option1">Icons</label>
+      <span>&nbsp;&nbsp;</span>
+    </div><hr>
+    <div class="container.fluid" *ngIf="allPaints && allPaints.length > 0">
+      <label class="form-label">Paints</label>
+      <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
+        <div *ngFor="let paintOption of allPaints" class="form-control">
+          <input type="checkbox"
+                 (click)="onChange(paintOption)"
+                 [defaultChecked]="valueContained(paintOption.id)"
+          /> {{paintOption.brand}}: {{paintOption.paintName}}
         </div>
       </div>
     </div>
-  </div>
-</div>
 
 
-<h2 class="display-4 text-center">Currently Owned Paints</h2><br><hr>
-<div class="alert alert-warning" id="no-result" *ngIf="ownedPaints?.length === 0">
-  <span>No Paint found for user</span>
-</div>
-<div class="container.fluid"  id="owned-paints-cards" *ngIf="ownedPaints && ownedPaints.length > 0">
-    <div class="row">
-        <div *ngFor="let paint of ownedPaints" class="col-md-2">
+
+  <div *ngSwitchCase="'icon'">
+
+    <h2 class="display-4 text-center">Available Paints</h2><br>
+    <div class="d-flex justify-content-end">
+      <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" [checked]="view == 'grid'" (click)="localStorage.setItem('view', 'grid')">
+      <label class="btn btn-outline-secondary btn" for="option2">Grid</label>
+      <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" [checked]="view == 'icon'"  (click)="localStorage.setItem('view', 'icon')">
+      <label class="btn btn-outline-secondary btn" for="option1">Icons</label>
+      <span>&nbsp;&nbsp;</span>
+    </div><hr>
+    <div class ="alert alert-warning" id="no-available-paints" *ngIf="availablePaints?.length === 0">
+      <span>No available paints to add to inventory</span>
+    </div>
+    <div class="container.fluid" id="available-paints-cards" *ngIf="availablePaints && availablePaints.length > 0">
+      <div class="row">
+        <div *ngFor="let availPaint of availablePaints" class="col-md-2">
           <div class="card text-center" style="width: 14rem; height: 22rem;">
-            <img *ngIf="!(paint.picture)"
-                 sizes="8rem;"
-                 [routerLink]="['/inventory-paint', paint.id, 'view']"
+            <img *ngIf="!(availPaint.picture)"
+                 style="max-width: 100%; max-height: 60%;"
                  src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-                 style="max-width: 100%; max-height: 60%"
                  alt="miniature image">
-            <img *ngIf="paint.picture"
-                 [routerLink]="['/inventory-paint', paint.id, 'view']"
-                 [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
-                 style="max-width: 100%; max-height: 60%"
+            <img *ngIf="availPaint.picture"
+                 [src]="'data:' + availPaint.pictureContentType + ';base64,' + availPaint.picture"
+                 style="max-width: 100%; max-height: 60%;"
                  alt="miniature image" >
             <div class="card-body">
-              <h5 class="card-title">{{paint.paintName}}</h5>
-              <p class="card-text">{{paint.brand}}</p>
+              <h5 class="card-title">{{availPaint.paintName}}</h5>
+              <p class="card-text">{{availPaint.brand}}</p>
             </div>
             <div class="card-footer justify-center">
-              <a type="submit" (click)="remove(paint)" class="btn btn-outline-secondary">remove</a>
+              <a type="submit" (click)="add(availPaint)" class="btn btn-outline-secondary">add</a>
             </div>
           </div>
         </div>
-      <div>
+      </div>
+    </div>
+
+
+    <h2 class="display-4 text-center">Currently Owned Paints</h2><br><hr>
+    <div class="alert alert-warning" id="no-result" *ngIf="ownedPaints?.length === 0">
+      <span>No Paint found for user</span>
+    </div>
+    <div class="container.fluid"  id="owned-paints-cards" *ngIf="ownedPaints && ownedPaints.length > 0">
+        <div class="row">
+            <div *ngFor="let paint of ownedPaints" class="col-md-2">
+              <div class="card text-center" style="width: 14rem; height: 22rem;">
+                <img *ngIf="!(paint.picture)"
+                     sizes="8rem;"
+                     [routerLink]="['/inventory-paint', paint.id, 'view']"
+                     src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
+                     style="max-width: 100%; max-height: 60%"
+                     alt="miniature image">
+                <img *ngIf="paint.picture"
+                     [routerLink]="['/inventory-paint', paint.id, 'view']"
+                     [src]="'data:' + paint.pictureContentType + ';base64,' + paint.picture"
+                     style="max-width: 100%; max-height: 60%"
+                     alt="miniature image" >
+                <div class="card-body">
+                  <h5 class="card-title">{{paint.paintName}}</h5>
+                  <p class="card-text">{{paint.brand}}</p>
+                </div>
+                <div class="card-footer justify-center">
+                  <a type="submit" (click)="remove(paint)" class="btn btn-outline-secondary">remove</a>
+                </div>
+              </div>
+            </div>
+          <div>
+      </div>
+    </div></div>
   </div>
-</div></div>
-<div class="text-end">
-  <button class="btn btn-primary" (click)="onSave()" id="save-button">Save</button>
-  <button class="btn btn-secondary" (click)="previousState()" id="back-button">Back</button>
+
+
+
+  <div class="text-end">
+    <button class="btn btn-primary" (click)="onSave()" id="save-button">Save</button>
+    <button class="btn btn-secondary" (click)="previousState()" id="back-button">Back</button>
+  </div>
 </div>
