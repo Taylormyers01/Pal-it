@@ -34,12 +34,14 @@
   <jhi-alert-error></jhi-alert-error>
 
 <!--  <jhi-alert></jhi-alert>-->
-
+<div>
   <div class="alert alert-warning" id="no-result" *ngIf="paints?.length === 0">
     <span jhiTranslate="palItApp.paint.home.notFound">No Paints found</span>
   </div>
-  <div [ngSwitch]="localStorage.getItem('view')">
-    <div *ngSwitchCase="'grid'">
+  <div [ngSwitch]="localStorage.getItem('view')" >
+    <div *ngSwitchCase="'grid'"
+         class="border border-secondary d-flex flex-column rounded"
+    style="--bs-border-opacity: .5">
       <div class="table-responsive table-entities" id="entities" *ngIf="paints && paints.length > 0" >
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
@@ -88,12 +90,13 @@
     </div>
 
 
-    <div *ngSwitchCase="'icon'">
-      <hr><br>
+    <div *ngSwitchCase="'icon'"
+         class="border border-secondary d-flex flex-column rounded"
+         style="--bs-border-opacity: .5">
       <div class="container.fluid" id="available-paints-cards" *ngIf="paints && paints.length > 0">
         <div class="row">
           <div *ngFor="let ownedPaint of paints" class="col-md-2">
-            <div class="card text-center" style="width: 80%; height: 22rem;">
+            <div class="card text-center m-2" style="width: 80%; height: 22rem;">
               <img *ngIf="!(ownedPaint.picture)"
                          [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"
                           src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
@@ -117,7 +120,7 @@
       </div>
     </div>
   </div>
-
+</div>
 </div>
 
 
