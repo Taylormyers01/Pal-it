@@ -3,11 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import {InventoryFormulaComponent} from "../inventory-formula-list/inventory-formula.component";
-import {InventoryFormulaNewComponent} from "../inventory-formula-new/inventory-formula-new.component";
-import {
-  ApplicationUserRoutingResolveService
-} from "../../application-user/route/application-user-routing-resolve.service";
-import {InventoryFormulaRoutingResolveService} from "./inventory-formula-routing-resolve.service";
 import {InventoryFormulaUpdateComponent} from "../inventory-formula-update/inventory-formula-update.component";
 import {FormulaRoutingResolveService} from "../../formula/route/formula-routing-resolve.service";
 

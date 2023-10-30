@@ -4,7 +4,7 @@ import { IApplicationUser } from 'app/entities/application-user/application-user
 export interface IFormula {
   id: number;
   formulaName?: string | null;
-  paintFormulas?: IPaint[] | null; //Pick<IPaint, 'id' | 'paintName'>
+  paintFormulas?: IPaint[] | null; // Pick<IPaint, 'id' | 'paintName'>
   user?: Pick<IApplicationUser, 'id' | 'applicationUserName'> | null;
 }
 

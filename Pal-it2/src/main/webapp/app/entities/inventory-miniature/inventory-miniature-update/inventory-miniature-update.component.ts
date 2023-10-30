@@ -54,6 +54,7 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ miniature }) => {
       this.miniature = miniature;
       if (miniature) {
+        // eslint-disable-next-line no-console
         console.log(miniature);
         this.updateForm(miniature);
       }
@@ -111,17 +112,21 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
 
   onChange(paintId: number):void {
     let miniFormula = this.editForm.value.miniatureFormulas as IPaint[];
+    // eslint-disable-next-line no-console
     console.log(miniFormula);
     const paint = this.applicationUsersSharedCollection?.ownedPaints?.filter(ownedPaint => ownedPaint.id===paintId)[0] as IPaint;
     if(!this.valueContained(paintId)) {
+      // eslint-disable-next-line no-console
       console.log(`adding paint ${paintId}`);
       miniFormula.push(paint);
     }else{
+      // eslint-disable-next-line no-console
         console.log('removing paint');
         miniFormula = miniFormula.filter(ownedPaint => ownedPaint.id !== paintId);
 
     }
     this.editForm.patchValue({miniatureFormulas: miniFormula});
+    // eslint-disable-next-line no-console
     console.log(this.editForm.value.miniatureFormulas);
   }
 

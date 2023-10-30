@@ -9,7 +9,13 @@
   <h2 id="page-heading">
     <h1 class="text-center display-4">Inventory Paints</h1><br><br>
       <div class="d-flex justify-content-end">
-
+        <div class="form-group">
+<!--          <label class="input-group-text" for="search-text">Search Text</label>-->
+          <input type="email" class="form-control" id="search-text" aria-describedby="search-text"
+                 [(ngModel)]="searchText" placeholder="Enter text to search"
+                 autofocus>
+        </div>
+        <span>&nbsp;&nbsp;</span>
         <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" [checked]="view == 'grid'" (click)="localStorage.setItem('view', 'grid')">
         <label class="btn btn-outline-secondary btn" for="option2">Grid</label>
         <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" [checked]="view == 'icon'"  (click)="localStorage.setItem('view', 'icon')">
@@ -69,7 +75,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let paint of paints; trackBy: trackId" data-cy="entityTable">
+            <tr *ngFor="let paint of paints | appFilter: searchText" data-cy="entityTable">
               <td>
                 <a [routerLink]="['/inventory-paint', paint.id, 'view']">{{ paint.id }}</a>
               </td>
@@ -95,7 +101,7 @@
          style="--bs-border-opacity: .5">
       <div class="container.fluid" id="available-paints-cards" *ngIf="paints && paints.length > 0">
         <div class="row">
-          <div *ngFor="let ownedPaint of paints" class="col-md-2">
+          <div *ngFor="let ownedPaint of paints | appFilter: searchText" class="col-md-2">
             <div class="card text-center m-2" style="width: 80%; height: 22rem;">
               <img *ngIf="!(ownedPaint.picture)"
                          [routerLink]="['/inventory-paint', ownedPaint.id, 'view']"
@@ -108,7 +114,7 @@
                           style="max-width: 100%; max-height: 60%;"
                          alt="miniature image" >
               <div class="card-body">
-                <h5 class="card-title"  >{{ownedPaint.paintName}}</h5>
+                <h5 class="card-title text-truncate"  >{{ownedPaint.paintName}}</h5>
                 <p class="card-text">{{ownedPaint.brand}}</p>
               </div>
               <div class="card-footer justify-center">

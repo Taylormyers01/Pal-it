@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { InventoryFormulaFormService, FormulaFormGroup } from './inventory-formula-form.service';
 import { IFormula} from "../../formula/formula.model";
@@ -22,12 +22,15 @@ import {FormControl} from "@angular/forms";
 export class InventoryFormulaUpdateComponent implements OnInit {
   isSaving = false;
   formula: IFormula | null = null;
-  paintForm = new FormControl('');
+  // paintForm = new FormControl('');
   account: Account | null = null;
   paintsSharedCollection: IPaint[] = [];
-  // applicationUsersSharedCollection: IApplicationUser[] = [];
+  searchText = ''
   applicationUsersSharedCollection: IApplicationUser | null = null;
   editForm: FormulaFormGroup = this.formulaFormService.createFormulaFormGroup();
+  protected readonly length = length;
+  protected readonly self = self;
+
 
   constructor(
     protected formulaService: FormulaService,
@@ -62,6 +65,7 @@ export class InventoryFormulaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const formula = this.formulaFormService.getFormula(this.editForm);
+    // eslint-disable-next-line no-console
     console.log(formula);
     formula.user = this.applicationUsersSharedCollection;
     if (formula.id !== null) {
@@ -72,17 +76,21 @@ export class InventoryFormulaUpdateComponent implements OnInit {
   }
   onChange(paintId: number):void {
     let paintFormula = this.editForm.value.paintFormulas as IPaint[];
+    // eslint-disable-next-line no-console
     console.log(paintFormula);
     const paint = this.applicationUsersSharedCollection?.ownedPaints?.filter(ownedPaint => ownedPaint.id===paintId)[0] as IPaint;
     if(!this.valueContained(paintId)) {
+      // eslint-disable-next-line no-console
       console.log(`adding paint ${paintId}`);
       paintFormula.push(paint);
     }else{
+      // eslint-disable-next-line no-console
       console.log('removing paint');
       paintFormula = paintFormula.filter(ownedPaint => ownedPaint.id !== paintId);
 
     }
     this.editForm.patchValue({paintFormulas: paintFormula});
+    // eslint-disable-next-line no-console
     console.log(this.editForm.value.paintFormulas);
   }
   valueContained(paintOption: number):boolean {
@@ -123,17 +131,12 @@ export class InventoryFormulaUpdateComponent implements OnInit {
       .getAuthenticationState()
       .subscribe(account => (this.account = account));
     if(this.account?.email){
-      this.applicationUserService.findUserWithFormulas(this.account.email).subscribe(data => this.applicationUsersSharedCollection = (data.body));
-      if(this.applicationUsersSharedCollection?.ownedPaints) {
-        this.paintsSharedCollection = this.applicationUsersSharedCollection.ownedPaints;
-      }
+      this.applicationUserService.findUserWithFormulas(this.account.email).subscribe(data => {
+        this.applicationUsersSharedCollection = (data.body)
+        if(data.body?.ownedPaints){
+          this.paintsSharedCollection = data.body.ownedPaints
+        }
+      });
     }
   }
-
-  protected readonly self = self;
-
-
-  protected readonly length = length;
-
-
 }

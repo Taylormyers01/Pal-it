@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()">
       <h2 id="jhi-formula-heading" data-cy="FormulaCreateUpdateHeading" jhiTranslate="palItApp.formula.home.createOrEditLabel">
         Create or edit a Formula
       </h2>
@@ -9,8 +9,8 @@
         <jhi-alert-error></jhi-alert-error>
 
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="palItApp.formula.formulaName" for="field_formulaName">Formula Name</label>
+        <div class="row mb-3 input-group">
+          <label class="input-group-text" for="field_formulaName">Formula Name</label>
           <input
             type="text"
             class="form-control"
@@ -19,26 +19,24 @@
             data-cy="formulaName"
             formControlName="formulaName"
           />
-          <div *ngIf="editForm.get('formulaName')!.invalid && (editForm.get('formulaName')!.dirty || editForm.get('formulaName')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('formulaName')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
+        </div>
+        <div *ngIf="applicationUsersSharedCollection?.ownedPaints">
+          <div class="row mb-3 input-group">
+          <input type="text" class="form-control justify-content-end mb-2" style="max-width: 15rem; margin-left: 85%" id="search-text" aria-describedby="search-text"
+                  [(ngModel)]= "searchText" placeholder="Enter text to search" name="searchText"
+                 autofocus>
+          <label class="input-group-text">Paints</label>
+          <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
+            <div *ngFor="let paintOption of paintsSharedCollection | appFilter: searchText" class="form-control">
+              <input type="checkbox"
+                     class="form-check-input"
+                     (click)="onChange(paintOption.id)"
+                     [defaultChecked]="valueContained(paintOption.id)"
+              /> {{paintOption.brand}}: {{paintOption.paintName}}
+            </div>
+
           </div>
         </div>
-
-        <label class="form-label">Paints</label>
-        <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
-          <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">
-            <input type="checkbox"
-                   (click)="onChange(paintOption.id)"
-                   [defaultChecked]="valueContained(paintOption.id)"
-            />{{paintOption.brand}}: {{paintOption.paintName}}
-          </div>
-
         </div>
       </div>
       <div>

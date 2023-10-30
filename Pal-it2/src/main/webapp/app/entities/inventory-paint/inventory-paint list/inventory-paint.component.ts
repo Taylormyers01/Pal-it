@@ -24,6 +24,7 @@ export class InventoryPaintComponent implements OnInit {
   ascending = true;
   isLoading = false;
   view?: string | null = null;
+  searchText = '';
   protected readonly localStorage = localStorage;
 
   private readonly destroy$ = new Subject<void>();

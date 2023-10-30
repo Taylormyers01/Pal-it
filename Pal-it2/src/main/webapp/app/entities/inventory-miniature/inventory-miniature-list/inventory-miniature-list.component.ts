@@ -5,7 +5,6 @@ import {IApplicationUser} from "../../application-user/application-user.model";
 import {ApplicationUserService} from "../../application-user/service/application-user.service";
 import {IMiniature} from "../../miniature/miniature.model";
 import {MiniatureService} from "../../miniature/service/miniature.service";
-import {switchMap} from "rxjs";
 
 @Component({
   selector: 'jhi-inventory-miniature-list',

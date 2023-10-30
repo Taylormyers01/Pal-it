@@ -81,10 +81,12 @@ export class ApplicationUserService {
   }
 
   findByUserID(login: string | undefined): Observable<HttpResponse<IApplicationUser>> {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return this.http.get<IApplicationUser>(`${this.resourceUrl}/user/${login}`, {observe: 'response' });
   }
 
     findPaintByUserID(login: string | undefined): Observable<HttpResponse<IPaint[]>>{
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`,{observe: 'response' });
   }
 
@@ -93,6 +95,7 @@ export class ApplicationUserService {
   //   return this.http.get<IPaint[]>(`${this.resourceUrl}/paint/${login}`, { params: options, observe: 'response' });
   // }
   queryAvailablePaints(id: number | undefined): Observable<EntityArrayResponseTypePaint> {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return this.http.get<IPaint[]>(`${this.resourceUrl}/available/${id}`, {observe: 'response' });
   }
   // updateOwnedPaint(id: number, paints: IPaint[]): Observable<HttpResponse<{}>>{

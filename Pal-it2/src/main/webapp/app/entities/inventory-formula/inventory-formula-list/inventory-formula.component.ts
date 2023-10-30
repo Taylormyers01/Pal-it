@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {takeUntil} from "rxjs/operators";
 import {AccountService} from "../../../core/auth/account.service";
 import{ApplicationUserService} from "../../application-user/service/application-user.service";
 import {Account} from "../../../core/auth/account.model";
@@ -51,6 +50,7 @@ export class InventoryFormulaComponent implements OnInit {
   open(content: any): void {
     this.offCanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(
       (result) => {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.closeResult = `Closed with: ${result}`;
       },
       (reason) => {

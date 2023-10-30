@@ -8,16 +8,16 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="palItApp.miniature.miniatureName" for="field_miniatureName">Miniature Name</label>
-          <input
-            type="text"
-            class="form-control"
-            name="miniatureName"
-            id="field_miniatureName"
-            data-cy="miniatureName"
-            formControlName="miniatureName"
-          />
+        <div class="row mb-3 input-group">
+            <label class="input-group-text"  for="field_miniatureName">Miniature Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="miniatureName"
+              id="field_miniatureName"
+              data-cy="miniatureName"
+              formControlName="miniatureName"
+            />
           <div
             *ngIf="
               editForm.get('miniatureName')!.invalid && (editForm.get('miniatureName')!.dirty || editForm.get('miniatureName')!.touched)
@@ -33,8 +33,8 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="palItApp.miniature.picture" for="field_picture">Picture</label>
+        <div class="row mb-3 input-group">
+          <label class="input-group-text" for="field_picture">Picture</label>
           <div>
             <img
               [src]="'data:' + editForm.get('pictureContentType')!.value + ';base64,' + editForm.get('picture')!.value"
@@ -49,20 +49,19 @@
               <button
                 type="button"
                 (click)="clearInputImage('picture', 'pictureContentType', 'file_picture')"
-                class="btn btn-secondary btn-xs pull-end"
+                class="btn btn-primary btn-xs pull-end"
               >
-                <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_picture"
-              data-cy="picture"
-              (change)="setFileData($event, 'picture', true)"
-              accept="image/*"
-              jhiTranslate="entity.action.addimage"
-            />
           </div>
+          <input
+            type="file"
+            class="form-control"
+            id="file_picture"
+            data-cy="picture"
+            (change)="setFileData($event, 'picture', true)"
+            accept="image/*"
+          />
           <input type="hidden" class="form-control" name="picture" id="field_picture" data-cy="picture" formControlName="picture" />
           <input
             type="hidden"
@@ -72,13 +71,17 @@
             formControlName="pictureContentType"
           />
         </div>
-        <label class="form-label">Paint</label>
-        <div class="row mb-3"  style="max-height: 10rem; overflow-x: auto; background: white">
-          <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">
-            <input type="checkbox"
-                   (click)="onChange(paintOption.id)"
-                   [defaultChecked]="valueContained(paintOption.id)"
-            />{{paintOption.brand}}: {{paintOption.paintName}}
+
+        <div class="row mb-3 input-group"  >
+          <label class="input-group-text">Paint</label>
+          <div style="max-height: 10rem; overflow-x: auto; background: white">
+            <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">
+              <input type="checkbox"
+                     class="form-check-input"
+                     (click)="onChange(paintOption.id)"
+                     [defaultChecked]="valueContained(paintOption.id)"
+              /> {{paintOption.brand}}: {{paintOption.paintName}}
+            </div>
           </div>
 
         </div>

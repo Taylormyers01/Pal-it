@@ -20,7 +20,11 @@ export class InventoryPaintUpdateComponent implements OnInit {
   account: Account | null = null;
   availablePaints?: IPaint[] | null = [];
   allPaints: IPaint[] | null = [];
-  view?: string | null = null;
+  updateView: string | null = null;
+  searchText = ''
+  iconAvailSearch = ''
+  iconOwnedSearch = ''
+  protected readonly localStorage = localStorage;
   private readonly destroy$ = new Subject<void>();
 
 
@@ -40,11 +44,16 @@ export class InventoryPaintUpdateComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if(localStorage.getItem('view')){
-      this.view = localStorage.getItem('view');
+    if(localStorage.getItem('updatView')){
+      this.updateView = localStorage.getItem('updateView');
+      // eslint-disable-next-line no-console
+      console.log(this.updateView)
+
     }
     else{
-      this.view = 'grid';
+      this.updateView = 'grid';
+      // eslint-disable-next-line no-console
+      console.log(this.updateView)
     }
     this.accountService
         .getAuthenticationState()
@@ -102,8 +111,5 @@ export class InventoryPaintUpdateComponent implements OnInit {
       this.ownedPaints?.push(paintOption)
     }
   }
-
-  protected readonly localStorage = localStorage;
-
 
 }
