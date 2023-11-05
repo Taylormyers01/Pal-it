@@ -21,6 +21,7 @@ type FormulaFormGroupContent = {
   formulaName: FormControl<IFormula['formulaName']>;
   paintFormulas: FormControl<IFormula['paintFormulas']>;
   user: FormControl<IFormula['user']>;
+  searchText: FormControl;
 };
 
 export type FormulaFormGroup = FormGroup<FormulaFormGroupContent>;
@@ -45,6 +46,7 @@ export class InventoryFormulaFormService {
       }),
       paintFormulas: new FormControl(formulaRawValue.paintFormulas ?? []),
       user: new FormControl(formulaRawValue.user),
+      searchText: new FormControl('')
     });
   }
 
