@@ -73,9 +73,12 @@
         </div>
 
         <div class="row mb-3 input-group"  >
+          <input type="text" class="form-control justify-content-end mb-2" style="max-width: 15rem; margin-left: 85%" aria-describedby="search-text"
+                 formControlName="searchText" placeholder="Enter text to search"
+                 autofocus>
           <label class="input-group-text">Paint</label>
           <div style="max-height: 10rem; overflow-x: auto; background: white">
-            <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints" class="form-control">
+            <div *ngFor="let paintOption of applicationUsersSharedCollection?.ownedPaints | appFilter: this.editForm.getRawValue().searchText" class="form-control">
               <input type="checkbox"
                      class="form-check-input"
                      (click)="onChange(paintOption.id)"

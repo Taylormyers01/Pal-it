@@ -14,6 +14,7 @@ export class InventoryMiniatureListComponent implements OnInit {
   account?: Account | null;
   appUser?: IApplicationUser | null;
   minis?: IMiniature[] | null;
+  searchText = ''
   constructor(
       protected accountService: AccountService,
       protected applicationUserService: ApplicationUserService,

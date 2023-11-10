@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(items: any[], searchText: string): any[] {
+  transform(items: any[] | null | undefined, searchText: string): any[] {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!items) {
       return [];

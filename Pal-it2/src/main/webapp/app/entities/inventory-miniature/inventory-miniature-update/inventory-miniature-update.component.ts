@@ -59,6 +59,7 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
         this.updateForm(miniature);
       }
       this.loadRelationshipsOptions();
+      this.verifyMini();
     });
   }
 
@@ -171,4 +172,10 @@ export class InventoryMiniatureUpdateComponent implements OnInit {
     }
   }
 
+  private verifyMini(): void {
+    if(this.miniature){
+      this.miniature.miniatureFormulas?.filter(paint => this.applicationUsersSharedCollection?.ownedPaints?.includes(paint))
+      this.miniatureService.update(this.miniature).subscribe(data => this.miniature=data.body)
+    }
+  }
 }

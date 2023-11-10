@@ -23,6 +23,7 @@ type MiniatureFormGroupContent = {
   pictureContentType: FormControl<IMiniature['pictureContentType']>;
   miniatureFormulas: FormControl<IMiniature['miniatureFormulas']>;
   user: FormControl<IMiniature['user']>;
+  searchText: FormControl;
 };
 
 export type MiniatureFormGroup = FormGroup<MiniatureFormGroupContent>;
@@ -46,12 +47,13 @@ export class InventoryMiniatureFormService {
         validators: [Validators.required],
       }),
       picture: new FormControl(
-        {value: miniatureRawValue.picture, disabled: true},
-        {validators: [Validators.required], nonNullable: true}
+        {value: miniatureRawValue.picture, disabled: true}
       ),
-      pictureContentType: new FormControl(miniatureRawValue.pictureContentType),
+      pictureContentType: new FormControl(miniatureRawValue.pictureContentType,
+        {validators: [Validators.required], nonNullable: true}),
       miniatureFormulas: new FormControl(miniatureRawValue.miniatureFormulas ?? []),
       user: new FormControl(miniatureRawValue.user),
+      searchText: new FormControl(''),
     });
   }
 
