@@ -10,6 +10,7 @@ import {AccountService} from "../../../core/auth/account.service";
 import {ApplicationUserService,} from "../../application-user/service/application-user.service";
 import {IUser} from "../../user/user.model";
 import { SortService } from 'app/shared/sort/sort.service';
+import {sortByItem} from "../../../core/util/operators";
 
 @Component({
   selector: 'jhi-inventory-paint',
@@ -58,7 +59,7 @@ export class InventoryPaintComponent implements OnInit {
     if (this.account?.email) {
       this.applicationUserService.findByUserID(this.account.email).subscribe(user => {
         this.applicationUser = user.body;
-        this.paints = user.body?.ownedPaints;
+        this.paints = sortByItem(user.body?.ownedPaints, "paintName")
       });
 
     }}

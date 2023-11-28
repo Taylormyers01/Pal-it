@@ -46,8 +46,10 @@
   </div>
   <div [ngSwitch]="localStorage.getItem('view')" >
     <div *ngSwitchCase="'grid'"
-         class="border border-secondary d-flex flex-column rounded"
-    style="--bs-border-opacity: .5">
+         class="d-flex flex-column">
+
+    <!--         class="border border-secondary d-flex flex-column rounded">-->
+<!--  style="--bs-border-opacity: .5"  >-->
       <div class="table-responsive table-entities" id="entities" *ngIf="paints && paints.length > 0" >
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
@@ -97,8 +99,10 @@
 
 
     <div *ngSwitchCase="'icon'"
-         class="border border-secondary d-flex flex-column rounded"
-         style="--bs-border-opacity: .5">
+         class="d-flex flex-column">
+
+    <!--         class="border border-secondary d-flex flex-column rounded"-->
+<!--         style="&#45;&#45;bs-border-opacity: .5">-->
       <div class="container.fluid" id="available-paints-cards" *ngIf="paints && paints.length > 0">
         <div class="row">
           <div *ngFor="let ownedPaint of paints | appFilter: searchText" class="col-md-2">

@@ -45,7 +45,9 @@ export class InventoryFormulaComponent implements OnInit {
     }
   }
   loadFormula(id: number):void {
-    this.formulaService.find(id).subscribe(data => this.selectedFormula = data.body);
+    this.formulaService.find(id).subscribe(data => {
+      this.selectedFormula = data.body
+    });
   }
   open(content: any): void {
     this.offCanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(

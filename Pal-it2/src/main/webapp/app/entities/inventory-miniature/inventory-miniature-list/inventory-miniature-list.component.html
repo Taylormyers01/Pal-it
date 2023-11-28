@@ -14,7 +14,7 @@
 
 
       <hr>
-    </h2>
+  </h2>
 
 
   <div class="row">
@@ -28,9 +28,13 @@
           [src]="'data:' + mini.pictureContentType + ';base64,' + mini.picture"
           alt="{{mini.miniatureName}} image"
         >
-        <button class="btn btn-outline-secondary" [routerLink]="['/inventory-miniature', mini.id , 'edit']">Edit</button>
-
+        <div class="mb-3 d-inline">
+          <button class="btn btn-outline-secondary" [routerLink]="['/inventory-miniature', mini.id , 'edit']">Edit</button>
+          <button class="btn btn-outline-secondary" [routerLink]="['/inventory-miniature', mini.id , 'view']">View</button>
+        </div>
       </div>
+
     </div>
+
   </div>
 </div>

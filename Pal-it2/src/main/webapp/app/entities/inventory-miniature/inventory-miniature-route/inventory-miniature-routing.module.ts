@@ -5,6 +5,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import {InventoryMiniatureListComponent} from "../inventory-miniature-list/inventory-miniature-list.component";
 import {InventoryMiniatureUpdateComponent} from "../inventory-miniature-update/inventory-miniature-update.component";
 import {MiniatureRoutingResolveService} from "../../miniature/route/miniature-routing-resolve.service";
+import {InventoryMiniatureViewComponent} from "../inventory-miniature-view/inventory-miniature-view.component";
 
 
 const inventoryRoute: Routes = [
@@ -13,14 +14,14 @@ const inventoryRoute: Routes = [
     component: InventoryMiniatureListComponent,
     canActivate: [UserRouteAccessService],
   },
-  // {
-  //   path: ':id/view',
-  //   component: InventoryPaintDetailComponent,
-  //   resolve: {
-  //     paint: PaintRoutingResolveService,
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
+  {
+    path: ':id/view',
+    component: InventoryMiniatureViewComponent,
+    resolve: {
+      paint: MiniatureRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
   {
     path: ':id/edit',
     component: InventoryMiniatureUpdateComponent,
