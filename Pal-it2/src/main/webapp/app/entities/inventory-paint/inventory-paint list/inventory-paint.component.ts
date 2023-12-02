@@ -63,4 +63,6 @@ export class InventoryPaintComponent implements OnInit {
       });
 
     }}
+
+  protected readonly sortByItem = sortByItem;
 }

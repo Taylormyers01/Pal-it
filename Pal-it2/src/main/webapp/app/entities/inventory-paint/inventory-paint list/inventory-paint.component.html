@@ -8,6 +8,18 @@
 <div>
   <h2 id="page-heading">
     <h1 class="text-center display-4">Inventory Paints</h1><br><br>
+    <div class="row">
+      <div class="col"></div>
+        <div ngbDropdown class="d-inline-block">
+          <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+            Sort By
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="paints = sortByItem(paints, 'paintName')">Paint Name</button>
+            <button ngbDropdownItem (click)="paints = sortByItem(paints, 'brand')">Brand</button>
+          </div>
+        </div>
+    </div>
       <div class="d-flex justify-content-end">
         <div class="form-group">
 <!--          <label class="input-group-text" for="search-text">Search Text</label>-->
