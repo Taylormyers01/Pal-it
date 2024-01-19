@@ -5,7 +5,7 @@ import {InventoryPaintRoutingModule} from "./inventory-paint route/inventory-pai
 import {InventoryPaintDetailComponent} from "./inventory-paint-detail/intentory-paint-detail.component";
 import {InventoryPaintUpdateComponent} from "./inventory-paint-update/inventory-paint-update.component";
 import {MatCardModule} from '@angular/material/card';
-import {MatButton, MatButtonModule} from "@angular/material/button";
+import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 

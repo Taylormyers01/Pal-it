@@ -3,21 +3,23 @@ package com.myapp.web.rest;
 import com.myapp.domain.Formula;
 import com.myapp.repository.FormulaRepository;
 import com.myapp.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.myapp.domain.Formula}.
@@ -165,6 +167,11 @@ public class FormulaResource {
     public ResponseEntity<Formula> getFormula(@PathVariable Long id) {
         log.debug("REST request to get Formula : {}", id);
         Optional<Formula> formula = formulaRepository.findOneWithEagerRelationships(id);
+        if(formula.isPresent()){
+            Formula f = formula.get();
+            f.cleanUpFormula(f);
+            return new ResponseEntity<>(f, HttpStatus.OK) ;
+        }
         return ResponseUtil.wrapOrNotFound(formula);
     }
 

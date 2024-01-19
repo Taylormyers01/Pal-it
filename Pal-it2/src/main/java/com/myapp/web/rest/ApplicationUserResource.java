@@ -5,12 +5,6 @@ import com.myapp.domain.Paint;
 import com.myapp.repository.ApplicationUserRepository;
 import com.myapp.service.ApplicationUserService;
 import com.myapp.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
-import java.util.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 /**
  * REST controller for managing {@link com.myapp.domain.ApplicationUser}.
@@ -92,8 +92,8 @@ public class ApplicationUserResource {
         if (!applicationUserRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
         ApplicationUser result = applicationUserRepository.save(applicationUser);
+
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, applicationUser.getId().toString()))
@@ -228,5 +228,10 @@ public class ApplicationUserResource {
     public ResponseEntity<ApplicationUser> getApplicationUserByUserIDWithFormula(@PathVariable String email) {
         log.debug("REST request to get ApplicationUser by UserID with Formulas : {}", email);
         return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByEmailWithFormula(email));
+    }
+    @GetMapping("/application-users/ownedpaints/{id}")
+    public ResponseEntity<ApplicationUser> findApplicationUserByIdWithFormula(@PathVariable Long id) {
+        log.debug("REST request to get ApplicationUser by UserID with Formulas : {}", id);
+        return ResponseUtil.wrapOrNotFound(this.applicationUserRepository.findApplicationUserByIdWithFormula(id));
     }
 }

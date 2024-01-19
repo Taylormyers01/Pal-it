@@ -6,7 +6,7 @@ export interface IApplicationUser {
   id: number;
   applicationUserName?: string | null;
   internalUser?: Pick<IUser, 'id' | 'login'> | null;
-  ownedPaints?: IPaint[] | null; //Pick<IPaint, 'id' | 'paintName'>
+  ownedPaints?: IPaint[] | null; // Pick<IPaint, 'id' | 'paintName'>
   formulaNames?: IFormula[] | null;
 }
 

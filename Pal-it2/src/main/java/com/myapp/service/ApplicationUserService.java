@@ -2,9 +2,11 @@ package com.myapp.service;
 
 
 import com.myapp.domain.ApplicationUser;
+import com.myapp.domain.Formula;
 import com.myapp.domain.Paint;
 import com.myapp.domain.User;
 import com.myapp.repository.ApplicationUserRepository;
+import com.myapp.repository.FormulaRepository;
 import com.myapp.repository.PaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationUserService {
@@ -20,6 +23,8 @@ public class ApplicationUserService {
     ApplicationUserRepository applicationUserRepository;
     @Autowired
     PaintRepository paintRepository;
+    @Autowired
+    FormulaRepository formulaRepository;
 
 
     /**
@@ -60,5 +65,18 @@ public class ApplicationUserService {
             throw new IllegalArgumentException("Incorrect ID supplied");
         }
 
+    }
+    public ApplicationUser verifyMiniatureAndFormulas(ApplicationUser applicationUser){
+        Set<Paint> p;
+        Set<Paint> ownedPaints = applicationUser.getOwnedPaints();
+        Set<Formula> formulaNames = applicationUser.getFormulaNames();
+        for(Formula formula : formulaNames){
+            p = formula.getPaintFormulas();
+            p = p.stream().filter(ownedPaints::contains).collect(Collectors.toSet());
+            formula.setPaintFormulas(p);
+            this.formulaRepository.save(formula);
+        }
+        applicationUser.setFormulaNames(formulaNames);
+        return applicationUser;
     }
 }

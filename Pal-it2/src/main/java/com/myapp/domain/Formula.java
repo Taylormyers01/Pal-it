@@ -1,13 +1,15 @@
 package com.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.stream.Collectors;
 
 /**
  * A Formula.
@@ -107,6 +109,12 @@ public class Formula implements Serializable {
     public Formula user(ApplicationUser applicationUser) {
         this.setUser(applicationUser);
         return this;
+    }
+
+    public Formula cleanUpFormula(Formula formula){
+        Set<Paint> ownedPaints = formula.user.getOwnedPaints();
+        formula.setPaintFormulas(formula.paintFormulas.stream().filter(ownedPaints::contains).collect(Collectors.toSet()));
+        return formula;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {NgbCarouselModule} from "@ng-bootstrap/ng-bootstrap";
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 

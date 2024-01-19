@@ -70,4 +70,8 @@ export class MiniatureService {
     }
     return miniatureCollection;
   }
+
+  findAllByUserId(id: number):Observable<EntityArrayResponseType>{
+    return this.http.get<IMiniature[]>(`${this.resourceUrl}/user/${id}`, {  observe: 'response' });
+  }
 }

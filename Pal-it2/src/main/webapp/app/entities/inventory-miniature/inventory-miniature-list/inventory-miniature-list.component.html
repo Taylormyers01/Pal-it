@@ -1,0 +1,40 @@
+<div>
+  <h2 id="page-heading">
+      <h1 class="text-center display-4">Miniatures</h1><br><br>
+      <div class="d-flex justify-content-end">
+        <div class="form-group">
+          <input type="email" class="form-control" id="search-text" aria-describedby="search-text"
+                 [(ngModel)]="searchText" placeholder="Enter text to search"
+                 autofocus>
+        </div>
+        <span>&nbsp;&nbsp;</span>
+        <button class="btn btn-outline-secondary" routerLink="/inventory-miniature/new">New Miniature</button>
+
+      </div>
+
+
+      <hr>
+  </h2>
+
+
+  <div class="row">
+    <div class="col-md-2" *ngFor="let mini of minis | appFilter: searchText">
+      <div class="card text-center mb-2 rounded-2" style="width: 14rem; height: 22rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{mini.miniatureName}}</h5>
+        </div>
+        <img
+          class="rounded-2"
+          [src]="'data:' + mini.pictureContentType + ';base64,' + mini.picture"
+          alt="{{mini.miniatureName}} image"
+        >
+        <div class="mb-3 d-inline">
+          <button class="btn btn-outline-secondary" [routerLink]="['/inventory-miniature', mini.id , 'edit']">Edit</button>
+          <button class="btn btn-outline-secondary" [routerLink]="['/inventory-miniature', mini.id , 'view']">View</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

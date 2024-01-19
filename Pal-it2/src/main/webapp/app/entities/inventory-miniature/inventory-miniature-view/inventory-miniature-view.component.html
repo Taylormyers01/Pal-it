@@ -1,0 +1,14 @@
+<p>inventory-miniature-view works!</p>
+<div *ngIf="miniature">
+  <h2 id="page-heading">
+    <h1 class="text-center display-4">{{miniature.miniatureName}}</h1><br><br>
+    <div class="d-flex justify-content-end">
+      <span>&nbsp;&nbsp;</span>
+      <button class="btn btn-outline-secondary" [routerLink]="['/inventory-miniature', miniature.id , 'edit']">Edit</button>
+
+    </div>
+
+
+    <hr>
+  </h2>
+</div>

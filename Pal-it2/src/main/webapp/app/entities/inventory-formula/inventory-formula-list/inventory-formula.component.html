@@ -10,36 +10,32 @@
   </h2><br><br>
   <body style="background: inherit">
   <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
-    <button
-      type="button"
-      class="btn btn-outline-secondary me-2"
-      id="dropdownManual"
-      ngbDropdownAnchor
-      (focus)="myDrop.open()"
-    >
-      Formulas
-    </button>
-    <div ngbDropdownMenu aria-labelledby="dropdownManual" >
-      <button ngbDropdownItem *ngFor="let formula of formulas" (click)="loadFormula(formula.id)">{{formula.formulaName}}</button>
-    </div>
+    <button type="button" class="btn btn-outline-secondary" (click)="open(content)">Select Formula</button>
   </div>
-  <div class="alert alert-warning" *ngIf="!selectedFormula">
-    <span >No formula selected</span>
+  <button class="btn btn-outline-secondary" id="new-formula-button" [routerLink]="['/inventory-formula/new']">New Formula</button>
+  <hr><br>
+  <div class="alert alert-warning"  *ngIf="!selectedFormula">
+    <span >Please select a formula from the dropdown</span>
   </div>
   <div *ngIf="selectedFormula">
     <div class="text-center">
-      <h3>{{selectedFormula.formulaName}}</h3>
+      <h3 class="display-2">{{selectedFormula.formulaName}}</h3>
+      <button class="btn btn-secondary" [routerLink]="['/inventory-formula',selectedFormula.id,'edit']">Edit Formula</button>
+      <hr>
       <div class="row">
+        <div class="alert alert-warning " *ngIf="selectedFormula.paintFormulas?.length === 0">
+          <span >No paints within this formula</span>
+        </div>
         <div *ngFor="let formulaPaint of selectedFormula.paintFormulas" class="col-md-2">
-          <div class="card text-center" style="width: 14rem; height: 22rem;">
+          <div class="card text-center mb-2" style="width: 14rem; height: 22rem;">
             <img *ngIf="!(formulaPaint.picture)"
                  style="max-width: 100%; max-height: 60%;"
                  src="https://monumenthobbies.com/cdn/shop/products/MPA-033-MetallicMedium_1024x1024@2x.png?v=1669486788"
-                 alt="miniature image">
+                 alt="paint image">
             <img *ngIf="formulaPaint.picture"
                  [src]="'data:' + formulaPaint.pictureContentType + ';base64,' + formulaPaint.picture"
                  style="max-width: 100%; max-height: 60%;"
-                 alt="miniature image" >
+                 alt="paint image" >
             <div class="card-body">
               <h5 class="card-title">{{formulaPaint.paintName}}</h5>
               <p class="card-text">{{formulaPaint.brand}}</p>
@@ -52,6 +48,22 @@
       </div>
     </div>
   </div>
+
+  <ng-template #content let-offcanvas>
+    <div class="offcanvas-header" >
+      <h4 class="offcanvas-title" id="offcanvas-basic-title">Select Formula</h4>
+<!--      <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>-->
+      <hr>
+    </div>
+    <div class="offcanvas-body">
+        <div class="row-cols-1">
+        <a *ngFor="let formula of formulas"
+           (click)="loadFormula(formula.id)"
+           style="max-width: 60%"
+        class="btn  btn-outline-secondary mb-1" >{{formula.formulaName}}</a>
+      </div>
+    </div>
+  </ng-template>
   </body>
   </html>
 

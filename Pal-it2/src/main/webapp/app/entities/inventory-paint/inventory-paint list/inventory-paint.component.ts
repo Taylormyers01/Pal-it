@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IPaint} from "../../paint/paint.model";
 import {PaintService} from "../../paint/service/paint.service";
-import {ActivatedRoute, Router, Data, ParamMap,} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {IApplicationUser} from "../../application-user/application-user.model";
 import {takeUntil} from "rxjs/operators";
@@ -9,8 +9,8 @@ import {Account} from "../../../core/auth/account.model";
 import {AccountService} from "../../../core/auth/account.service";
 import {ApplicationUserService,} from "../../application-user/service/application-user.service";
 import {IUser} from "../../user/user.model";
-import {ASC, DESC, } from "../../../config/navigation.constants";
 import { SortService } from 'app/shared/sort/sort.service';
+import {sortByItem} from "../../../core/util/operators";
 
 @Component({
   selector: 'jhi-inventory-paint',
@@ -24,7 +24,8 @@ export class InventoryPaintComponent implements OnInit {
   predicate = 'id';
   ascending = true;
   isLoading = false;
-  view = 'grid';
+  view?: string | null = null;
+  searchText = '';
   protected readonly localStorage = localStorage;
 
   private readonly destroy$ = new Subject<void>();
@@ -45,6 +46,12 @@ export class InventoryPaintComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if(localStorage.getItem('view')){
+      this.view = localStorage.getItem('view');
+    }
+    else{
+      this.view = 'grid';
+    }
     this.accountService
         .getAuthenticationState()
         .pipe(takeUntil(this.destroy$))
@@ -52,45 +59,10 @@ export class InventoryPaintComponent implements OnInit {
     if (this.account?.email) {
       this.applicationUserService.findByUserID(this.account.email).subscribe(user => {
         this.applicationUser = user.body;
-        this.paints = user.body?.ownedPaints;
+        this.paints = sortByItem(user.body?.ownedPaints, "paintName")
       });
-    }
-    // this.load();
-  }
 
-  load(): void{
-    // this.applicationUserService.findPaintByUserID(this.account?.email).subscribe(data => this.paints = data.body);
-    // if(this.paints) {
-    //   this.paints = this.refineData(this.paints);
-    // }
-  }
+    }}
 
-
-
-  // navigateToWithComponentValues(): void {
-  //   this.handleNavigation(this.predicate, this.ascending);
-  // }
-  // protected refineData(data: IPaint[]): IPaint[] {
-  //   return data.sort(this.sortService.startSort(this.predicate, this.ascending ? 1 : -1));
-  // }
-  // protected handleNavigation(predicate?: string, ascending?: boolean): void {
-  //   const queryParamsObj = {
-  //     sort: this.getSortQueryParam(predicate, ascending),
-  //   };
-  //
-  //   this.router.navigate(['./'], {
-  //     relativeTo: this.activatedRoute,
-  //     queryParams: queryParamsObj,
-  //   });
-  // }
-  // protected getSortQueryParam(predicate = this.predicate, ascending = this.ascending): string[] {
-  //   const ascendingQueryParam = ascending ? ASC : DESC;
-  //   if (predicate === '') {
-  //     return [];
-  //   } else {
-  //     return [predicate + ',' + ascendingQueryParam];
-  //   }
-  // }
-
-
+  protected readonly sortByItem = sortByItem;
 }
